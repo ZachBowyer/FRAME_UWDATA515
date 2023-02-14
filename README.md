@@ -6,7 +6,7 @@ Final Project
 Zachary Bowyer  
 Raman SV  
 Arjun Sharma  
-Adithyaa Vassen  
+Adithyaa Vaasen  
 
 
 # Project description:
