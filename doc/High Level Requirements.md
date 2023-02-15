@@ -1,9 +1,9 @@
-The main requirements for this website will be -
+#The main requirements for this website will be -
   1) User uses filters that align with their needs in terms of food items that they are looking for.
   2) The result displays 5 food items based on the selection - these 5 items need not be from the same restaurant. 
   3) The result displays 3 links - the restaurant website(if available), further (all) menu items from the restaurant and the google maps directions.  
  
- Features to consider -
+ #Features to consider -
   1) User tracking and storing data of inputs and outputs
   2) Further 5 results if the first 5 weren't appetizing enough
   3) Search by restaurant and rank their hits
