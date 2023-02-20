@@ -122,7 +122,3 @@ folium.Marker(
     ),
 ).add_to(m)
 m.save("TestMaps/graphPopups.html")
-
-# Remove marker/circles from map object??
-# Icon size (Cant be changed, weird bug if you try)??
-# Generates html, so forced into web-based solutions our our bigger problem
