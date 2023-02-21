@@ -38,7 +38,7 @@
   * Initial hosting
   * Research hosting options
   * Finalizing all documentation
-# Adi: Data/API
+# Adi: 
   * Project Manager
   * Explore data/APIS
   * Documentation
