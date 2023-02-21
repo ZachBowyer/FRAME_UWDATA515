@@ -32,40 +32,6 @@ This project is of the predefined class type: 'Tool'. It is a tool as it helps u
 # Goal for the project output (What is going to be produced?)  
 Top 5 (maybe 10) dishes that align with the user's inputs based on preferences and filters. Further details about the dish and restaurant will be provided to the users upon selecting a specific recommendation.   
 
-# Data sources:
-1. Uber Eats Restaurants and Menus - https://www.kaggle.com/datasets/ahmedshahriarsakib/uber-eats-usa-restaurants-menus    
-This dataset contains two files:   
-Restaurants.csv (40228 rows, 11 columns)    
-* id (int64): 1-40228      
-* position (int64): Irrelevant    
-* Name (String): unspecified format    
-* score (float64): 1.3-5.0, 45.21% null values  
-* ratings (float64): 10-500, 44.6% null values  
-* category (String): unspecified format, 0.05% null values  
-* price-range: Either $, $$, $$$, or $$$$ (Inexpensive, Moderately expensive, Expensive, Very   Expensive), 16.5% null values  
-               https://stackoverflow.com/questions/40005100/what-is-the-pricerange-parameter-for-google-structured-data-reviews/40112652#40112652    
-               (Seems arbitrary)    
-* full_address (string): Unspecified format, 0.69% null values  
-* zip_code (string): Unspecified format, 0.71% null values  
-* lat (float64): 0 - 48.964  
-* lng (float64): -123.841 - 0  
-  
-restaurant-menus.csv (3375211 rows, 5 columns)
-* restaurant-id: (int64) - 1-40228
-* category (String): Unspecified format
-* name (String): Unspecified format
-* description (String): Unspecified format, 26.9% null values
-* price: (String, float followed with ' USD', EX: '5:99 USD')  
-From this data, we have 1740 Seattle-based restaurants, that combine for 99643 menu items.  
-
-1. New York Public Library (What's on the menu?) - https://menus.nypl.org/data  
-2. Data.gov - https://catalog.data.gov/dataset?tags=restaurant    
-3. Yelp Review - https://www.yelp.com/dataset  
-
-Uber eats scraper - https://github.com/gsunit/Extreme-Uber-Eats-Scraping 
-
-
-
 # Proposal slide: 
 ![alt text](images/ProposalSlide.png)
 
