@@ -38,13 +38,11 @@
   * Initial hosting
   * Research hosting options
   * Finalizing all documentation
-  * 
 # Adi: Data/API
+  * Project Manager
   * Explore data/APIS
   * Documentation
-  * 
 
 # Unassigned ideas:
 Backend (If needed)
 Testing (Modular, integration)
-Project manager role (Enforce deadlines and standups/timings) (Arjun or Adi)
