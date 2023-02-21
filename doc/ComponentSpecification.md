@@ -1,46 +1,51 @@
 # Software components
 Web-hosted application
-- Reasoning: We ultimately want our tool to be publically available through a website url. 
-- What it does: Connects to the internet and provides an interface for our filters/algorithms/visualizations.  
-- Inputs required: Requires a connection to the internet and port forwarding.  
-- Provided outputs: GUI to view visualizations, provide input, and manipulate filters.  
+- Reasoning: We want our tool to be publicly available through a website/url. 
+- What it does: via a publicly accessible website, the app provides an interface that hosts the filters, algorithms and displays the results.  
+- Inputs required: Requires a connection to the internet and port forwarding.
+- Provided outputs: GUI to view visualizations, provide input, manipulate filters and display recommendations.   
 
 Dynamic map creating module
 - Reasoning: We would like to show the user their location relative to the restaurant they want to order from. We would also like to show directions to that restaurant if possible.   
-- What it does: Creates dynamic maps based on the user's locations, provides pins for the location of the user and the restaurant, and draws polylines to represent directions from the user's location to the restaurant.  
-- Inputs required: Coordinates of user (Lat, Lon), Coordinates of target restaurant
-- Provided outputs: Json of directions, which are used to create a map that has pins and directions.  
+- What it does: create dynamic maps based on the user's locations, provide pins for the location of the user and the restaurant or menu item, and draws polylines to represent directions from the user's location to the restaurant.  
+- Inputs required: rough estimate of user location (Lat, Lon, Zip code etc.), coordinates of target restaurant(s).
+- Provided outputs: JSON of directions, which are used to create a map that has pins and directions.  
 
 Filtering module:
 - Reasoning: We need to have a mechanism that can recommend dishes to users.  
-- What it does: Filters out choices the user may not enjoy based on their preferences.  
-- Inputs required: User's preferences for foods, IE: Allergies, minimum distance, food type, etc.  
-- Provided outputs: A list of the top 10 dishes/restaurants based on the user's choices  
+- What it does: displays the top 5 items based on user inputs of their preferences and their geographical location.  
+- Inputs required: User's preferences for foods encompassing filters such as allergies, dietary restrictions, proximity, nutrition, price, etc.  
+- Provided outputs: visual representation of 5 dishes and the restaurants they are available at, the ratings and the location   
 
 # Interactions to accomplish use-cases
 # Use cases:
-## Case: User wants to know what to eat for dinner/breakfast/lunch
-For this use case, we first need our user to navigate to our url, which can only be possible if our web-hosted application is up and running. 
-Next, in order to choose a food, they must input their information and filters, which is also depending on the web application working. 
-After that, the filtering module will determine what foods best fit the user's needs.
-When the user decides on a food, then the location and direction to that restaurant will be provided bu the dynamic map creating module.    
+## Case: User needs recommendations on food items to have for breakfast, lunch or dinner
+- For this use case, the user navigates to the website url, which is possible only if our web-hosted application is active. 
+- Next, in order to display recommendations, the user must input their preferences. 
+- Based on these preferences, the filtering module will determine the foods that best fit these requirements.
+- For each of the food items, the location, restaurant menu and Yelp ratings (wherever available) will also be displayed by the dynamic map creating module.    
+
+
 ![alt text](../images/UseCaseInteractionGraph1.png)
 
-## Case: User wants to search up a specific restaurant and view it's menu  
-Again, the user must navigate to our url, which can only be possible if the web application is running.  
-Next, the user must input a restaurant name in a search bar. 
-From there, our filtering module will return the restaurant menu data if it exists, else it will do nothing.  
-Then, if the user selects the restaurant all menu data will be shown.  
-If the user wants a specific item from that menu, they can select it, which will result in map information being generated (See use case above).  
-## Case: User wants to filter all menu items from a specific restaurant  
-The user must navigate to our url, which can only be possible if the web application is running. 
-From there, our filtering module will return the restaurant menu data if it exists, else it will do nothing.  
-Then, if the user selects the restaurant all menu data will be shown.  
-Next, in order to choose a food, they must input filters. 
-When the user decides on a food, then the location and direction to that restaurant will be provided bu the dynamic map creating module.  
+
+## Case: User searches for a specific restaurant to view it's entire menu  
+- For this use case, the user navigates to the website url, which is possible only if our web-hosted application is active. 
+- The user inputs a restaurant name in the restaurant search filter. 
+- The filtering module then returns the restaurant menu data if it exists, it will display a random list of top 5 restaurants near the user otherwise.  
+- When the user selects a restaurant from above, all menu data will be displayed.  
+- If the user wants details about a specific item from the menu, they can select it, and the app will display the map information similar to the use case above.  
+
+## Case: User filters for food items from a specific restaurant  
+- For this use case, the user navigates to the website url, which is possible only if our web-hosted application is active.
+- The user inputs the restaurant name they are looking for in the restaurant search filter. 
+- The filtering module then returns the restaurant menu data if it exists, it will display a random list of top 5 restaurants near the user otherwise.  
+- When the user selects their restaurant from above, all the menu data will be displayed.  
+- In order to choose a particular food item, the user can input their recommednations via the input filters. 
+- For the food items selected, the location, restaurant menu and Yelp ratings (wherever available) will be displayed by the dynamic map creating module.    
 
 ## Case: User wants a place on the internet to get multiple food recommendations based on filters that are not available with existing platforms  
-This is an implicit use case, and is already described from the three use-cases above.  
+This is an implicit use case, and is already described from the three use-cases above.
 
 # Preliminary plan
 Week 1:
