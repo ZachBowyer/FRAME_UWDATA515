@@ -7,6 +7,7 @@ import json
 from datetime import datetime
 import requests
 import polyline
+from uszipcode import SearchEngine, SimpleZipcode, ComprehensiveZipcode
 gmaps = googlemaps.Client(key='AIzaSyBZ4qYFC5GQMzxfYDPMhIHTuorS0lnTNLM')
 
 # https://googlemaps.github.io/google-maps-services-python/docs/index.html#googlemaps.Client.addressvalidation
@@ -81,7 +82,7 @@ def getdurationoftrip(origin, destination):
     directions = gmaps.directions(origin, destination, mode="driving")
     return directions[0]["legs"][0]["duration"]["text"]
 
-def createmap(origin, destination, directions=True, originMarker=True, destinationMarker=True):
+def createmap(origin, destination, directions=True, originMarker=True, destinationMarker=True, zipCode=None):
     """
     Description: Singular endpoint for fully created map
     Input: ?
@@ -103,11 +104,31 @@ def createmap(origin, destination, directions=True, originMarker=True, destinati
     if(directions == True):
         directionCoords = getdirections(origin, destination)
         folium.PolyLine(directionCoords, tooltip="?").add_to(new_map)
+
+    #Highlight zip code if provided
+    if(zipCode is not None):
+        search = SearchEngine(simple_or_comprehensive=SearchEngine.SimpleOrComprehensiveArgEnum.comprehensive)
+        zipcode = search.by_zipcode(zipCode)
+        borderpolygon = zipcode.polygon
+
+        #Get coords in orientation folium requires (Lat, Lon) instead of (Lon, Lat)
+        newCoords = []
+        for coords in borderpolygon:
+            newCoords.append([coords[1], coords[0]])
+        
+        #Draw polygon
+        folium.Polygon(
+            locations=newCoords,
+            popup="Test",
+            color = "Green",
+            fill=True,
+            fill_color = "Green",
+            ).add_to(new_map)
     return new_map
 
 #testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "6226 Seaview Ave NW, Seattle, WA, 98107")
 #testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433")
-testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "99338")
+testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "99338", zipCode=99338)
 testmap.save("Map.html")
 #print(getdistanceoftrip("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433"))
 #print(getdurationoftrip("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433"))
