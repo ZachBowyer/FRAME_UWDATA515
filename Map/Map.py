@@ -1,29 +1,12 @@
 """
 Easy to use interface to generate folium maps for our web app
 """
-import googlemaps 
-import folium
-import json
 from datetime import datetime
-import requests
+import googlemaps
+import folium
 import polyline
-from uszipcode import SearchEngine, SimpleZipcode, ComprehensiveZipcode
+from uszipcode import SearchEngine
 gmaps = googlemaps.Client(key='AIzaSyBZ4qYFC5GQMzxfYDPMhIHTuorS0lnTNLM')
-
-# https://googlemaps.github.io/google-maps-services-python/docs/index.html#googlemaps.Client.addressvalidation
-
-#def addressexist():
-#    """
-#    Input: String (Google maps valid address)
-#    Output: Boolean (True if google maps can find the specified input, false otherwise)
-#    """
-#    test = gmaps.addressvalidation(["4555 Roosevelt Way NE, Seattle, WAS 98105"], 
-#                                regionCode='US',
-#                                locality='None', 
-#                                enableUspsCass=True)
-#    print(json.dumps(test, sort_keys=True, indent=4))
-#    #print(test)
-#    return True
 
 def getaddresscoordinates(address):
     """
@@ -51,9 +34,8 @@ def getdirections(origin, destination):
     """
     now = datetime.now()
     directions = gmaps.directions(origin, destination, mode="driving", departure_time=now)
-    polylineEncode = directions[0]["overview_polyline"]["points"]
-    coordinates = polyline.decode(polylineEncode, 5)
-    #print(json.dumps(directions, sort_keys=True, indent=2))
+    encodedpolyline = directions[0]["overview_polyline"]["points"]
+    coordinates = polyline.decode(encodedpolyline, 5)
     return coordinates
 
 def getdistanceoftrip(origin, destination):
@@ -82,68 +64,155 @@ def getdurationoftrip(origin, destination):
     directions = gmaps.directions(origin, destination, mode="driving")
     return directions[0]["legs"][0]["duration"]["text"]
 
-def createmap(origin, destinations, directions=True, originMarker=True, destinationMarkers=True, zipCode=None):
+class Map():
     """
-    Description: Singular endpoint for fully created map
-    Input: 
-        origin: String
-        destinations: List of strings
-    Output: HTML String
+    Class used to modularly break up the steps of adding icons/polylines/polygons to the map
+    Currently there is no known 'good' way to remove icons, polylines, polygons etc.
+        Bad solution #1: Re-render the map
+        Bad solution #2: Add layercontrol and groupings, set specific group to hidden
+        Solution #3: Edit the html of self.map manually
+    See https://python-visualization.github.io/folium/ for folium documentation
     """
-    originCoords = getaddresscoordinates(origin)
-    
-    #Create map
-    new_map = folium.Map(location=originCoords)
+    def __init__(self):
+        """
+        Description:
+            Define class variables
+        """
+        self.colors = ["red", "blue", "green", "orange", "darkred", "lightred",
+                  "beige", "darkblue", "darkgreen", "cadetblue", "darkpurple", "white", 
+                  "pink", "lightblue", "lightgreen", "gray", "black", "lightgray"]
+        self.origincoords = [0, 0]
+        self.markers = {}
+        self.polylines = {}
+        self.zipcodepolygons = {}
+        self.origin = ""
+        self.map = None
 
-    if(originMarker == True):
-        folium.Marker(originCoords, popup="Origin:"+origin).add_to(new_map)
-    
-    colors = ["red", "blue", "green", "orange", "darkred", "lightred",
-              "beige", "darkblue", "darkgreen", "cadetblue", "darkpurple", "white", 
-              "pink", "lightblue", "lightgreen", "gray", "black", "lightgray"]
-    index=0
-    for destination in destinations:
-        destinationCoords = getaddresscoordinates(destination)
-        if(destinationMarkers == True):
-            folium.Marker(destinationCoords, popup="Destination:"+destination, 
-                          icon=folium.Icon(icon="star", color=colors[index]),
-                          ).add_to(new_map)
-        #Add directions if specified
-        if(directions == True):
-            directionCoords = getdirections(origin, destination)
-            folium.PolyLine(directionCoords, tooltip="?", color=colors[index]).add_to(new_map)
-        index += 1
+    #Class methods:
+    def createmap(self, origin=None):
+        """
+        Description:
+            Creates a folium map centered at the origin
+        Inputs:
+            origin-String of where the map should be centered, must be googlemaps valid
+        Outputs:
+            None, creates self.map
+        """
+        self.origin = origin
+        self.origincoords = getaddresscoordinates(origin)
+        if origin is None:
+            self.map = folium.Map()
+        else:
+            self.map = folium.Map(location=self.origincoords)
 
-    #Highlight zip code if provided
-    if(zipCode is not None):
-        search = SearchEngine(simple_or_comprehensive=SearchEngine.SimpleOrComprehensiveArgEnum.comprehensive)
-        zipcode = search.by_zipcode(zipCode)
+    def addmarker(self, address, popup="", icon="star", color="blue"):
+        """
+        Description: 
+            Adds a marker to the folium map
+            See https://fontawesome.com/search?s=solid&f=sharp&o=r for icon information
+        Inputs:
+            popup-String that is shown when the user clicks on the marker
+            icon-String of what icon you want shown 
+            color-String of what color you want the marker to be
+        Outputs:
+            None, adds marker to self.map
+        """
+        addresscoords = getaddresscoordinates(address)
+        marker = folium.Marker(addresscoords, popup=popup,icon=folium.Icon(icon=icon, color=color))
+        marker.add_to(self.map)
+        self.markers[address] = marker
+
+    def addtrippolyline(self, address, color):
+        """
+        Description:
+            Adds a polyline to the folium map from self.origin to supplied destination 
+        Inputs:
+            address-String that is a googlemaps valid address
+            color-String of what color you want the polylines to be
+        Outputs:
+            None, adds polyline to self.map
+        """
+        directioncoords = getdirections(self.origin, address)
+        poly = folium.PolyLine(directioncoords, tooltip="?", color=color)
+        poly.add_to(self.map)
+        self.polylines[address] = poly
+
+    def add_simple_multi_destinations(self, addresses):
+        """
+        Description:
+            Creates markers and polylines related to specified destinations
+            Non-customizable, used as a quick and dirty method. If you want
+            more customization, see addtrippolyline(), addmarker().
+        Inputs:
+            addresses-List of strings which are googlemaps valid addresses
+        Outputs:
+            None, adds markers and polylines to self.map
+        """
+        index = 0
+        for address in addresses:
+            self.addtrippolyline(address, color=self.colors[index])
+            self.addmarker(address, popup=address, color=self.colors[index])
+            index += 1
+
+    def showzipcode(self, zipcodenum, color="blue"):
+        """
+        Description:
+            Creates polygon outline around a zip code and fills it
+            When running for the first time, downloads data which is slow 
+            (Look into fixing or add to setup)
+        Inputs:
+            zipcodenum-Integer of the zipcode you want shown on the map
+            color-String color of what polygon color you want
+        Outputs:
+            None, draws polygon on self.map
+        """
+        search = SearchEngine(simple_or_comprehensive=
+                              SearchEngine.SimpleOrComprehensiveArgEnum.comprehensive)
+        zipcode = search.by_zipcode(zipcodenum)
         borderpolygon = zipcode.polygon
 
         #Get coords in orientation folium requires (Lat, Lon) instead of (Lon, Lat)
-        newCoords = []
+        correctedpolygon = []
         for coords in borderpolygon:
-            newCoords.append([coords[1], coords[0]])
-        
-        #Draw polygon
-        folium.Polygon(
-            locations=newCoords,
-            popup="Test",
-            color = "Green",
-            fill=True,
-            fill_color = "Green",
-            ).add_to(new_map)
-    return new_map
+            correctedpolygon.append([coords[1], coords[0]])
 
-#testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "6226 Seaview Ave NW, Seattle, WA, 98107")
-#testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433")
-#testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", ["99338", "6226 Seaview Ave NW, Seattle, WA, 98107"], zipCode=99338)
-testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", ["7501 35th Ave NE, Seattle, WA 98115", 
-                                                                  "6226 Seaview Ave NW, Seattle, WA, 98107",
-                                                                  "1000 NE Northgate Way, Seattle, WA 98125",
-                                                                  "12801 Aurora Ave N, Seattle, WA 98133",
-                                                                  "2901 E Madison St, Seattle, WA 98112"],
-                                                                  zipCode=None)
-testmap.save("Map.html")
-#print(getdistanceoftrip("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433"))
-#print(getdurationoftrip("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433"))
+        #Draw polygon
+        polygon = folium.Polygon(
+            locations=correctedpolygon,
+            popup=zipcodenum,
+            color = color,
+            fill=True,
+            fill_color = color,
+        )
+        polygon.add_to(self.map)
+        self.zipcodepolygons[zipcodenum] = polygon
+
+    def returnmap(self):
+        """
+        Description:
+            Returns the folium map object stored in this class instance
+        """
+        return self.map
+
+    def save(self, path):
+        """
+        Description:
+           Saves folium map object to html file 
+        """
+        self.map.save(path)
+
+#Tests
+newmap = Map()
+newmap.createmap(origin="4555 Roosevelt Way NE, Seattle, WAS 98105")
+newmap.addmarker("4555 Roosevelt Way NE, Seattle, WAS 98105",
+                popup="Origin", icon="star", color="green")
+newmap.addmarker("1000 NE Northgate Way, Seattle, WA 98125",
+                popup="Destination", icon="star", color="green")
+#newmap.addtrippolyline("1000 NE Northgate Way, Seattle, WA 98125", color="green")
+newmap.add_simple_multi_destinations(["7501 35th Ave NE, Seattle, WA 98115",
+                    "6226 Seaview Ave NW, Seattle, WA, 98107",
+                    "1000 NE Northgate Way, Seattle, WA 98125",
+                    "12801 Aurora Ave N, Seattle, WA 98133",
+                    "2901 E Madison St, Seattle, WA 98112"],)
+newmap.showzipcode(98125)
+newmap.save("map.html")
