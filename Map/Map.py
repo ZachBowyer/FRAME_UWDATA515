@@ -82,14 +82,15 @@ def getdurationoftrip(origin, destination):
     directions = gmaps.directions(origin, destination, mode="driving")
     return directions[0]["legs"][0]["duration"]["text"]
 
-def createmap(origin, destination, directions=True, originMarker=True, destinationMarker=True, zipCode=None):
+def createmap(origin, destinations, directions=True, originMarker=True, destinationMarkers=True, zipCode=None):
     """
     Description: Singular endpoint for fully created map
-    Input: ?
+    Input: 
+        origin: String
+        destinations: List of strings
     Output: HTML String
     """
     originCoords = getaddresscoordinates(origin)
-    destinationCoords = getaddresscoordinates(destination)
     
     #Create map
     new_map = folium.Map(location=originCoords)
@@ -97,13 +98,21 @@ def createmap(origin, destination, directions=True, originMarker=True, destinati
     if(originMarker == True):
         folium.Marker(originCoords, popup="Origin:"+origin).add_to(new_map)
     
-    if(destinationMarker == True):
-        folium.Marker(destinationCoords, popup="Destination:"+destination).add_to(new_map)
-
-    #Add directions if specified
-    if(directions == True):
-        directionCoords = getdirections(origin, destination)
-        folium.PolyLine(directionCoords, tooltip="?").add_to(new_map)
+    colors = ["red", "blue", "green", "orange", "darkred", "lightred",
+              "beige", "darkblue", "darkgreen", "cadetblue", "darkpurple", "white", 
+              "pink", "lightblue", "lightgreen", "gray", "black", "lightgray"]
+    index=0
+    for destination in destinations:
+        destinationCoords = getaddresscoordinates(destination)
+        if(destinationMarkers == True):
+            folium.Marker(destinationCoords, popup="Destination:"+destination, 
+                          icon=folium.Icon(icon="star", color=colors[index]),
+                          ).add_to(new_map)
+        #Add directions if specified
+        if(directions == True):
+            directionCoords = getdirections(origin, destination)
+            folium.PolyLine(directionCoords, tooltip="?", color=colors[index]).add_to(new_map)
+        index += 1
 
     #Highlight zip code if provided
     if(zipCode is not None):
@@ -128,7 +137,13 @@ def createmap(origin, destination, directions=True, originMarker=True, destinati
 
 #testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "6226 Seaview Ave NW, Seattle, WA, 98107")
 #testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433")
-testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", "99338", zipCode=99338)
+#testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", ["99338", "6226 Seaview Ave NW, Seattle, WA, 98107"], zipCode=99338)
+testmap = createmap("4555 Roosevelt Way NE, Seattle, WAS 98105", ["7501 35th Ave NE, Seattle, WA 98115", 
+                                                                  "6226 Seaview Ave NW, Seattle, WA, 98107",
+                                                                  "1000 NE Northgate Way, Seattle, WA 98125",
+                                                                  "12801 Aurora Ave N, Seattle, WA 98133",
+                                                                  "2901 E Madison St, Seattle, WA 98112"],
+                                                                  zipCode=None)
 testmap.save("Map.html")
 #print(getdistanceoftrip("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433"))
 #print(getdurationoftrip("4555 Roosevelt Way NE, Seattle, WAS 98105", "41st Division Dr, Joint Base Lewis-McChord, WA 98433"))
