@@ -1,0 +1,7 @@
+name: FRAME_env
+dependencies:
+  - python=3.10.9
+  - anaconda
+  - pip
+  - pip:
+    - -r requirements.txt
