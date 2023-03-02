@@ -10,14 +10,12 @@ Adithyaa Vaasen
 # SETUP
 ## WINDOWS
 install anaconda https://www.anaconda.com/ 
-conda env create --name FRAME --file=environment_windows.yml
+conda env create --name FRAME_windows --file=environment_windows.yml
 conda info --envs (See if it exists)
 conda activate FRAME
 python setup.py
 
 ## UNIX
-install anaconda https://www.anaconda.com/ 
-???
 pip install googlemaps
 pip install folium
 pip install polyline
