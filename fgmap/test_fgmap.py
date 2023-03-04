@@ -1,20 +1,22 @@
-import map
+import fgmap 
 import unittest
 
-class TestGoogleMapsMethods(unittest.testcase):
-    def test()
-        x=1
-
-class TestMapMethods(unittest.testcase):
-    def test()
-        x=1
-
-if __name__ == '__main__':
-    unittest.main()
+#class TestGoogleMapsMethods(unittest.testcase):
+#    def test():
+#        x=1
+#
+#class TestMapMethods(unittest.testcase):
+#    def test():
+#        x=1
+#
+#if __name__ == '__main__':
+#    unittest.main()
 
 #Tests
-#newmap = map.Map()
-#newmap.createmap(origin="4555 Roosevelt Way NE, Seattle, WAS 98105")
+newmap = fgmap.Fgmap()
+newmap.createmap(origin="4555 Roosevelt Way NE, Seattle, WAS 98105")
+test = newmap.returnhtml()
+print(test)
 #newmap.addmarker("4555 Roosevelt Way NE, Seattle, WAS 98105",
 #                popup="Origin", icon="star", color="green")
 #newmap.addmarker("1000 NE Northgate Way, Seattle, WA 98125",
