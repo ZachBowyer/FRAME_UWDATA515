@@ -64,7 +64,7 @@ def getdurationoftrip(origin, destination):
     directions = gmaps.directions(origin, destination, mode="driving")
     return directions[0]["legs"][0]["duration"]["text"]
 
-class Map():
+class Fgmap():
     """
     Class used to modularly break up the steps of adding icons/polylines/polygons to the map
     Currently there is no known 'good' way to remove icons, polylines, polygons etc.
@@ -200,3 +200,10 @@ class Map():
            Saves folium map object to html file 
         """
         self.map.save(path)
+
+    def returnhtml(self):
+        """
+        Description
+            Returns html of rendered folium map
+        """
+        return self.map.get_root().render()
