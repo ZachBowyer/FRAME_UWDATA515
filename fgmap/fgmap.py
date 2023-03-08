@@ -8,6 +8,22 @@ import polyline
 from uszipcode import SearchEngine
 gmaps = googlemaps.Client(key='AIzaSyBZ4qYFC5GQMzxfYDPMhIHTuorS0lnTNLM')
 
+def addressexists(address):
+    """
+    Description:
+        Checks if a supplied address is valid
+    Input:
+        address-String
+    Output:
+        Boolean (True if address is recognized by google maps)
+    """
+    if(isinstance(address, str) == False): 
+        raise ValueError("Input: address - must be a string")
+    info = gmaps.addressvalidation(address)
+    confirmation = info["result"]["address"]["addressComponents"][0]["confirmationLevel"]
+    if(confirmation == "CONFIRMED"): return True
+    return False
+
 def getaddresscoordinates(address):
     """
     Description: 
@@ -20,6 +36,8 @@ def getaddresscoordinates(address):
     if(isinstance(address, str) == False): 
         raise ValueError("Input: address - must be a string")
     info = gmaps.addressvalidation(address)
+    if(not addressexists(address)):
+        raise ValueError("Google can not find the specified address")
     lat = info["result"]["geocode"]["location"]["latitude"]
     lon = info["result"]["geocode"]["location"]["longitude"]
     return [lat, lon]
@@ -32,8 +50,17 @@ def getdirections(origin, destination):
         origin-String that is a googlemaps valid address
         destination-String that is a googlemaps valid address
     Output: 
-        List of lists: IE: [[123, 20], [129, 21], ...]
+        List of tuples: IE: [(123.1, 20.2), (129.3, 21.1), ...]
+        Interior elements should be floats
     """
+    if(isinstance(origin, str) == False): 
+        raise ValueError("Input: origin - must be a string")
+    if(isinstance(destination, str) == False): 
+        raise ValueError("Input: destination - must be a string")
+    if(not addressexists(origin)):
+        raise ValueError("Google can not find the specified address (origin)")
+    if(not addressexists(destination)):
+        raise ValueError("Google can not find the specified address (destination)")
     now = datetime.now()
     directions = gmaps.directions(origin, destination, mode="driving", departure_time=now)
     encodedpolyline = directions[0]["overview_polyline"]["points"]
