@@ -7,6 +7,10 @@ Raman SV
 Arjun Sharma  
 Adithyaa Vaasen  
 
+# App Link
+
+https://arjun-sc31-data-515-demonstration-app-hj40h8.streamlit.app/#frame-food-recommendations-for-all-methodical-eaters
+
 # SETUP
 ## WINDOWS
 install anaconda https://www.anaconda.com/ 
