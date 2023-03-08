@@ -17,6 +17,8 @@ def getaddresscoordinates(address):
     Output:
         List of two signed floats: [latitude, longitude] 
     """
+    if(isinstance(address, str) == False): 
+        raise ValueError("Input: address - must be a string")
     info = gmaps.addressvalidation(address)
     lat = info["result"]["geocode"]["location"]["latitude"]
     lon = info["result"]["geocode"]["location"]["longitude"]
