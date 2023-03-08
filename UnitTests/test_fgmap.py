@@ -95,31 +95,68 @@ class TestGoogleMapsMethods(unittest.TestCase):
             print("Google cannot find address error properly raised for fgmap.getdirections() arg 2")
             directions = fgmap.getdirections("a9sd8$$uf0u2-09", "99338")
 
-#class TestMapMethods(unittest.testcase):
-#    def test():
-#        x=1
-#
-#if __name__ == '__main__':
-#    unittest.main()
+    #######################################################################
+    def test_getdistanceoftrip_smoke(self):
+        x=1
+    def test_getdistanceoftrip_verifyinput(self):
+        x=1
+    def test_getdistanceoftrip_verifyoutput(self):
+        x=1
+    def test_getdistanceoftrip_expectation(self):
+        x=1
+    def test_getdistanceoftrip_edge_invalidaddress(self):
+        x=1
+    
+    #######################################################################
+    def test_fgmap_smoke(self):
+        """See if it works"""
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin="4555 Roosevelt Way NE, Seattle, WAS 98105")
+        newmap.addmarker("4555 Roosevelt Way NE, Seattle, WAS 98105")
+        newmap.addtrippolyline("99338")
+        newmap.add_simple_multi_destinations(["12813 198th Dr NE, Woodinville, WA 98077", 
+                                              "14107 194th Ave NE, Woodinville, WA 98077"])
+        newmap.showzipcode(99338)
+        mapobjectr = newmap.returnmap()
+        outputhtml = newmap.returnhtml()
+    
+    def test_fgmap_verifyinputs():
+        """ Test inputs for all methods in class"""
+        x=1
+    
+    def test_fgmap_verifyoutputs():
+        """ Test outputs for all methods in class"""
+        x=1
+    
+    def test_fgmap_createmap_edge_invalidaddressorigin(self):
+        x=1
 
-#print(fgmap.getaddresscoordinates("99338"))
-#Tests
-#newmap = fgmap.Fgmap()
-#newmap.createmap(origin="4555 Roosevelt Way NE, Seattle, WAS 98105")
-#test = newmap.returnhtml()
-#print(test)
-#newmap.addmarker("4555 Roosevelt Way NE, Seattle, WAS 98105",
-#                popup="Origin", icon="star", color="green")
-#newmap.addmarker("1000 NE Northgate Way, Seattle, WA 98125",
-#                popup="Destination", icon="star", color="green")
-##newmap.addtrippolyline("1000 NE Northgate Way, Seattle, WA 98125", color="green")
-#newmap.add_simple_multi_destinations(["7501 35th Ave NE, Seattle, WA 98115",
-#                    "6226 Seaview Ave NW, Seattle, WA, 98107",
-#                    "1000 NE Northgate Way, Seattle, WA 98125",
-#                    "12801 Aurora Ave N, Seattle, WA 98133",
-#                    "2901 E Madison St, Seattle, WA 98112"],)
-#newmap.showzipcode(98125)
-#newmap.save("map.html")
+    def test_fgmap_createmap_edge_noneorigin(self):
+        x=1
+    
+    def test_fgmap_addmarker_edge_invalidaddress(self):
+        x=1
+    
+    def test_fgmap_addmarker_edge_invalidicon(self):
+        x=1
+    
+    def test_fgmap_addmarker_edge_invalidcolor(self):
+        x=1
+    
+    def test_fgmap_addtrippolyline_edge_invalidaddress(self):
+        x=1
+    
+    def test_fgmap_addtrippolyline_edge_invalidcolor(self):
+        x=1
+    
+    def test_fgmap_addsimplemultidestinations_edge_invalidaddress(self):
+        x=1
+
+    def test_fgmap_showzipcode_edge_invalidzipcode(self):
+        x=1
+
+    def test_fgmap_showzipcode_edge_invalidcolor(self):
+        x=1
 
 if __name__ == '__main__':
     unittest.main()
