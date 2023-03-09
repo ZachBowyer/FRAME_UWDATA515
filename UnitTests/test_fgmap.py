@@ -1,8 +1,12 @@
+"""
+Tests:
+"""
+
 import sys
 sys.path.insert(0, '../fgmap')
 import fgmap 
 import unittest
-
+import folium
 
 class TestGoogleMapsMethods(unittest.TestCase):
     """ Tests each function in fgmap.py that is outside of the fgmap class. 
@@ -95,6 +99,8 @@ class TestGoogleMapsMethods(unittest.TestCase):
             print("Google cannot find address error properly raised for fgmap.getdirections() arg 2")
             directions = fgmap.getdirections("a9sd8$$uf0u2-09", "99338")
 
+    #Check if directions dont exist, IE OVERSEAS
+
     #######################################################################
     def test_getdistanceoftrip_smoke(self):
         """ See if it runs """
@@ -170,6 +176,7 @@ class TestGoogleMapsMethods(unittest.TestCase):
         outputhtml = newmap.returnhtml()
         self.assertTrue(True)
     
+    ########################################################################
     def test_fgmap_createmap_verifyinputs(self):
         newmap = fgmap.Fgmap()
         """ Test inputs for all methods in class"""
@@ -177,55 +184,45 @@ class TestGoogleMapsMethods(unittest.TestCase):
             print("Non string input error properly raised for fgmap.fgmap.createmap()")
             newmap.createmap(origin=23198)
     
-    def test_fg_map_addmarker_verifyinputs(self):
+    def test_fgmap_createmap_verifyoutputs(self):
+        """ Test outputs for all methods in class"""
         newmap = fgmap.Fgmap()
         newmap.createmap(origin = "99338")
-        with self.assertRaises(ValueError):
-            print("Non string input error properly raised for fgmap.fgmap.addmarker()")
-            newmap.addmarker(14107)
-            
-    def test_fgmap_addtrippolyline_verifyinputs(self):
-        newmap = fgmap.Fgmap()
-        newmap.createmap(origin = "99338")
-        with self.assertRaises(ValueError):
-            print("Non string input error properly raised for fgmap.fgmap.addtripolyline() arg1")
-            newmap.addtrippolyline(99338, "blue")
-        with self.assertRaises(ValueError):
-            print("Non string input error properly raised for fgmap.fgmap.addtripolyline() arg2")
-            newmap.addtrippolyline("99338", 32443)
-
-    def test_fgmap_simplemultidestinations_verifyinputs(self):
-        newmap = fgmap.Fgmap()
-        newmap.createmap(origin = "99338")
-        with self.assertRaises(ValueError):
-            print("Non list input error properly raised for fgmap.fgmap.simplemultidestinations()")
-            newmap.add_simple_multi_destinations("12813 198th Dr NE, Woodinville, WA 98077")
-
-    def test_showzipcode_verifyinputs(self):
-        newmap = fgmap.Fgmap()
-        newmap.createmap(origin = "93338")
-        with self.assertRaises(ValueError):
-            print("Non integer input error properly raised for fgmap.fgmap.showzipcode() arg1")
-            newmap.showzipcode("93338")
-        with self.assertRaises(ValueError):
-            print("Non string input error properly raised for fgmap.fgmap.showzipcode() arg2")
-            newmap.showzipcode(93338, color=193)
-        
-
-    #def test_fgmap_verifyoutputs(self):
-    #    """ Test outputs for all methods in class"""
-        #createmap()
-        #addmarker()
-        #addtrippolyline()
-        #add_simple_multi_destinations()
-        #showzipcode()
+        self.assertIsInstance(newmap.map, folium.folium.Map, "fgmap.Fgmap.createmap() did not set self.map to folium.folium.map")
     
-    #def test_fgmap_createmap_edge_invalidaddressorigin(self):
-    #    x=1
-
+    def test_fgmap_createmap_edge_invalidaddressorigin(self):
+        with self.assertRaises(ValueError):
+            newmap = fgmap.Fgmap()
+            newmap.createmap(origin = "asd98u9832")
+            print("Google cannot find address properly raised for fgmap.Fgmap.createmap()")
+    
     #def test_fgmap_createmap_edge_noneorigin(self):
     #    x=1
+
+    #############################################
+    def test_fgmap_addmarker_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addmarker(); arg: 'address'")
+            newmap.addmarker(99338, popup="abc", icon="star", color="blue")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addmarker(); arg: 'popup'")
+            newmap.addmarker("99338", popup=123, icon="star", color="blue")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addmarker(); arg: 'icon'")
+            newmap.addmarker("99338", popup="123", icon=123, color="blue")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addmarker(); arg: 'color'")
+            newmap.addmarker("99338", popup="123", icon="123", color=123.2)
     
+    def test_fgmap_addmarker_verifyoutputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "93338")
+        address = "4555 Roosevelt Way NE, Seattle, WAS 98105"
+        newmap.addmarker(address)
+        self.assertIsInstance(newmap.markers[address],folium.map.Marker, "fgmap.Fgmap.addmarker() did not set self.markers[] to folium.map.Marker")
+
     #def test_fgmap_addmarker_edge_invalidaddress(self):
     #    x=1
     
@@ -234,15 +231,55 @@ class TestGoogleMapsMethods(unittest.TestCase):
     
     #def test_fgmap_addmarker_edge_invalidcolor(self):
     #    x=1
+
+    #############################################
+    def test_fgmap_addtrippolyline_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addtripolyline(); arg: 'address'")
+            newmap.addtrippolyline(99338, "blue")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addtripolyline(); arg: 'color'")
+            newmap.addtrippolyline("99338", 32443)
     
+    def test_fgmap_addtrippolyline_verifyoutputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        address = "4555 Roosevelt Way NE, Seattle, WAS 98105"
+        newmap.addtrippolyline(address, "blue")
+        print(newmap.polylines[address])
+        self.assertIsInstance(newmap.polylines[address], folium.vector_layers.PolyLine, "fgmap.Fgmap.addtrippolyline() did not set self.polyLines[] to folium.vector_layers.Polyline")
+
+    #Edge case where both origin and a single address are the same!
+
     #def test_fgmap_addtrippolyline_edge_invalidaddress(self):
     #    x=1
     
     #def test_fgmap_addtrippolyline_edge_invalidcolor(self):
     #    x=1
+
+    #############################################
+    def test_fgmap_simplemultidestinations_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Non list input error properly raised for fgmap.fgmap.simplemultidestinations()")
+            newmap.add_simple_multi_destinations("12813 198th Dr NE, Woodinville, WA 98077")
     
     #def test_fgmap_addsimplemultidestinations_edge_invalidaddress(self):
     #    x=1
+
+    #############################################
+    def test_showzipcode_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Non integer input error properly raised for fgmap.fgmap.showzipcode(); arg: 'zipcodenum'")
+            newmap.showzipcode("99338")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.showzipcode(); arg: 'color'")
+            newmap.showzipcode(93338, color=193)
 
     #def test_fgmap_showzipcode_edge_invalidzipcode(self):
     #    x=1

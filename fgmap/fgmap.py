@@ -63,6 +63,8 @@ def getdirections(origin, destination):
         raise ValueError("Google can not find the specified address (destination)")
     now = datetime.now()
     directions = gmaps.directions(origin, destination, mode="driving", departure_time=now)
+    if(len(directions) == 0):
+        raise ValueError("Google cannot find directions, it is likely the addresses are overseas")
     encodedpolyline = directions[0]["overview_polyline"]["points"]
     coordinates = polyline.decode(encodedpolyline, 5)
     return coordinates
@@ -145,6 +147,8 @@ class Fgmap():
         """
         if(isinstance(origin, str) == False):
             raise ValueError("Input: origin - must be a string")
+        if(not addressexists(origin)):
+            raise ValueError("Google can not find the specified address (origin)")
         self.origin = origin
         self.origincoords = getaddresscoordinates(origin)
         if origin == "":
@@ -158,6 +162,7 @@ class Fgmap():
             Adds a marker to the folium map
             See https://fontawesome.com/search?s=solid&f=sharp&o=r for icon information
         Inputs:
+            address-String that is a googlemaps valid address
             popup-String that is shown when the user clicks on the marker
             icon-String of what icon you want shown 
             color-String of what color you want the marker to be
