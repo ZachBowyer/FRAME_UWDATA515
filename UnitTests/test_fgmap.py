@@ -97,66 +97,130 @@ class TestGoogleMapsMethods(unittest.TestCase):
 
     #######################################################################
     def test_getdistanceoftrip_smoke(self):
-        x=1
+        """ See if it runs """
+        distance = fgmap.getdistanceoftrip("99338", "4555 Roosevelt Way NE, Seattle, WAS 98105")
+        self.assertTrue(True)
+
     def test_getdistanceoftrip_verifyinput(self):
-        x=1
+        """ Should only be able to take in 2 strings """
+        with self.assertRaises(ValueError):
+            print("Non string input error (arg1) properly raised for fgmap.getdistanceoftrip()")
+            fgmap.getdistanceoftrip(99338, "98521")
+        with self.assertRaises(ValueError):
+            print("Non string input error (arg2) properly raised for fgmap.getdistanceoftrip()")
+            fgmap.getdistanceoftrip("99338", 98521)
+
     def test_getdistanceoftrip_verifyoutput(self):
-        x=1
+        """ Return should be a string """
+        distance = fgmap.getdistanceoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
+        self.assertIsInstance(distance, str, "getdistanceoftrip() did not return string")
+    
     def test_getdistanceoftrip_expectation(self):
-        x=1
+        """ Supply values and compare to expected output """
+        distance = fgmap.getdistanceoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
+        self.assertEqual(distance, "231 mi", "getdistanceoftrip() did not return as expected")
+
     def test_getdistanceoftrip_edge_invalidaddress(self):
-        x=1
+        """ Test invalid address """
+        with self.assertRaises(ValueError):
+            print("Google cannot find address error properly raised for fgmap.getdistanceoftrip()")
+            distance = fgmap.getdistanceoftrip("99338", "a98asduf098u2-09")
     
     #######################################################################
+    def test_getdurationoftrip_smoke(self):
+        """ See if it runs """
+        duration = fgmap.getdurationoftrip("99338", "4555 Roosevelt Way NE, Seattle, WAS 98105")
+        self.assertTrue(True)
+    
+    def test_getdurationftrip_verifyinput(self):
+        """ Should only be able to take in 2 strings """
+        with self.assertRaises(ValueError):
+            print("Non string input error (arg1) properly raised for fgmap.getdurationoftrip()")
+            fgmap.getdurationoftrip(99338, "98521")
+        with self.assertRaises(ValueError):
+            print("Non string input error (arg2) properly raised for fgmap.getdurationoftrip()")
+            fgmap.getdurationoftrip("99338", 98521)
+
+    def test_getdurationoftrip_verifyoutput(self):
+        """ Return should be a string """
+        duration = fgmap.getdurationoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
+        self.assertIsInstance(duration, str, "getdurationoftrip() did not return string")
+    
+    def test_getdurationoftrip_expectation(self): #What if the route changes...
+        """ Should be expected output """ 
+        duration = fgmap.getdurationoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
+        self.assertEqual(duration, "3 hours 47 mins", "getdistanceoftrip() did not return as expected")
+
+    def test_getdurationoftrip_edge_invalidaddress(self):
+        with self.assertRaises(ValueError):
+            print("Google cannot find address error properly raised for fgmap.getdurationoftrip()")
+            duration = fgmap.getdurationoftrip("99338", "a98asduf098u2-09")
+    
+    ########################################################################
     def test_fgmap_smoke(self):
         """See if it works"""
         newmap = fgmap.Fgmap()
         newmap.createmap(origin="4555 Roosevelt Way NE, Seattle, WAS 98105")
         newmap.addmarker("4555 Roosevelt Way NE, Seattle, WAS 98105")
-        newmap.addtrippolyline("99338")
+        newmap.addtrippolyline("99338", "blue")
         newmap.add_simple_multi_destinations(["12813 198th Dr NE, Woodinville, WA 98077", 
                                               "14107 194th Ave NE, Woodinville, WA 98077"])
         newmap.showzipcode(99338)
         mapobjectr = newmap.returnmap()
         outputhtml = newmap.returnhtml()
+        self.assertTrue(True)
     
-    def test_fgmap_verifyinputs():
+    def test_fgmap_verifyinputs(self):
         """ Test inputs for all methods in class"""
-        x=1
-    
+        #createmap()
+        with self.assertRaises(ValueError):
+            newmap = fgmap.Fgmap()
+            newmap.createmap(origin=23198)
+            print("Non string input error properly raised for fgmap.fgmap.createmap()")
+        
+        #addmarker()
+        #addtrippolyline()
+        #add_simple_multi_destinations()
+        #showzipcode()
+
+
     def test_fgmap_verifyoutputs():
         """ Test outputs for all methods in class"""
-        x=1
+        #createmap()
+        #addmarker()
+        #addtrippolyline()
+        #add_simple_multi_destinations()
+        #showzipcode()
     
-    def test_fgmap_createmap_edge_invalidaddressorigin(self):
-        x=1
+    #def test_fgmap_createmap_edge_invalidaddressorigin(self):
+    #    x=1
 
-    def test_fgmap_createmap_edge_noneorigin(self):
-        x=1
+    #def test_fgmap_createmap_edge_noneorigin(self):
+    #    x=1
     
-    def test_fgmap_addmarker_edge_invalidaddress(self):
-        x=1
+    #def test_fgmap_addmarker_edge_invalidaddress(self):
+    #    x=1
     
-    def test_fgmap_addmarker_edge_invalidicon(self):
-        x=1
+    #def test_fgmap_addmarker_edge_invalidicon(self):
+    #    x=1
     
-    def test_fgmap_addmarker_edge_invalidcolor(self):
-        x=1
+    #def test_fgmap_addmarker_edge_invalidcolor(self):
+    #    x=1
     
-    def test_fgmap_addtrippolyline_edge_invalidaddress(self):
-        x=1
+    #def test_fgmap_addtrippolyline_edge_invalidaddress(self):
+    #    x=1
     
-    def test_fgmap_addtrippolyline_edge_invalidcolor(self):
-        x=1
+    #def test_fgmap_addtrippolyline_edge_invalidcolor(self):
+    #    x=1
     
-    def test_fgmap_addsimplemultidestinations_edge_invalidaddress(self):
-        x=1
+    #def test_fgmap_addsimplemultidestinations_edge_invalidaddress(self):
+    #    x=1
 
-    def test_fgmap_showzipcode_edge_invalidzipcode(self):
-        x=1
+    #def test_fgmap_showzipcode_edge_invalidzipcode(self):
+    #    x=1
 
-    def test_fgmap_showzipcode_edge_invalidcolor(self):
-        x=1
+    #def test_fgmap_showzipcode_edge_invalidcolor(self):
+    #    x=1
 
 if __name__ == '__main__':
     unittest.main()

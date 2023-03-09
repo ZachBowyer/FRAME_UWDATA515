@@ -77,6 +77,14 @@ def getdistanceoftrip(origin, destination):
     Outputs: 
         String
     """
+    if(isinstance(origin, str) == False): 
+        raise ValueError("Input: origin - must be a string")
+    if(isinstance(destination, str) == False): 
+        raise ValueError("Input: destination - must be a string")
+    if(not addressexists(origin)):
+        raise ValueError("Google can not find the specified address (origin)")
+    if(not addressexists(destination)):
+        raise ValueError("Google can not find the specified address (destination)")
     directions = gmaps.directions(origin, destination, mode="driving")
     return directions[0]["legs"][0]["distance"]["text"]
 
@@ -90,6 +98,14 @@ def getdurationoftrip(origin, destination):
     Outputs: 
         String
     """
+    if(isinstance(origin, str) == False): 
+        raise ValueError("Input: origin - must be a string")
+    if(isinstance(destination, str) == False): 
+        raise ValueError("Input: destination - must be a string")
+    if(not addressexists(origin)):
+        raise ValueError("Google can not find the specified address (origin)")
+    if(not addressexists(destination)):
+        raise ValueError("Google can not find the specified address (destination)")
     directions = gmaps.directions(origin, destination, mode="driving")
     return directions[0]["legs"][0]["duration"]["text"]
 
@@ -118,7 +134,7 @@ class Fgmap():
         self.map = None
 
     #Class methods:
-    def createmap(self, origin=None):
+    def createmap(self, origin=""):
         """
         Description:
             Creates a folium map centered at the origin
@@ -127,9 +143,11 @@ class Fgmap():
         Outputs:
             None, creates self.map
         """
+        if(isinstance(origin, str) == False): 
+            raise ValueError("Input: origin - must be a string")
         self.origin = origin
         self.origincoords = getaddresscoordinates(origin)
-        if origin is None:
+        if origin is "":
             self.map = folium.Map()
         else:
             self.map = folium.Map(location=self.origincoords)
