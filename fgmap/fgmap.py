@@ -143,11 +143,11 @@ class Fgmap():
         Outputs:
             None, creates self.map
         """
-        if(isinstance(origin, str) == False): 
+        if(isinstance(origin, str) == False):
             raise ValueError("Input: origin - must be a string")
         self.origin = origin
         self.origincoords = getaddresscoordinates(origin)
-        if origin is "":
+        if origin == "":
             self.map = folium.Map()
         else:
             self.map = folium.Map(location=self.origincoords)
@@ -164,6 +164,14 @@ class Fgmap():
         Outputs:
             None, adds marker to self.map
         """
+        if(isinstance(address, str) == False):
+            raise ValueError("Input: address - must be a string")
+        if(isinstance(popup, str) == False):
+            raise ValueError("Input: popup - must be a string")
+        if(isinstance(icon, str) == False):
+            raise ValueError("Input: icon - must be a string")
+        if(isinstance(color, str) == False):
+            raise ValueError("Input: color - must be a string")
         addresscoords = getaddresscoordinates(address)
         marker = folium.Marker(addresscoords, popup=popup,icon=folium.Icon(icon=icon, color=color))
         marker.add_to(self.map)
@@ -179,6 +187,12 @@ class Fgmap():
         Outputs:
             None, adds polyline to self.map
         """
+        if(isinstance(address, str) == False):
+            raise ValueError("Input: address - must be a string")
+        if(isinstance(color, str) == False):
+            raise ValueError("Input: color - must be a string")
+        if(not addressexists(address)):
+            raise ValueError("Google can not find the specified address (origin):", address)
         directioncoords = getdirections(self.origin, address)
         poly = folium.PolyLine(directioncoords, tooltip="?", color=color)
         poly.add_to(self.map)
@@ -195,8 +209,12 @@ class Fgmap():
         Outputs:
             None, adds markers and polylines to self.map
         """
+        if(isinstance(addresses, list) == False):
+            raise ValueError("Input: addresses - must be a list")
         index = 0
         for address in addresses:
+            if(not addressexists(address)):
+                raise ValueError("Google can not find the specified address:", address)
             self.addtrippolyline(address, color=self.colors[index])
             self.addmarker(address, popup=address, color=self.colors[index])
             index += 1
@@ -213,6 +231,11 @@ class Fgmap():
         Outputs:
             None, draws polygon on self.map
         """
+        if(isinstance(zipcodenum, int) == False):
+            raise ValueError("Input: zipcodecum - must be a integer")
+        if(isinstance(color, str) == False):
+            raise ValueError("Input: color - must be a string")
+        
         search = SearchEngine(simple_or_comprehensive=
                               SearchEngine.SimpleOrComprehensiveArgEnum.comprehensive)
         zipcode = search.by_zipcode(zipcodenum)

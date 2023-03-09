@@ -170,22 +170,50 @@ class TestGoogleMapsMethods(unittest.TestCase):
         outputhtml = newmap.returnhtml()
         self.assertTrue(True)
     
-    def test_fgmap_verifyinputs(self):
+    def test_fgmap_createmap_verifyinputs(self):
+        newmap = fgmap.Fgmap()
         """ Test inputs for all methods in class"""
-        #createmap()
         with self.assertRaises(ValueError):
-            newmap = fgmap.Fgmap()
-            newmap.createmap(origin=23198)
             print("Non string input error properly raised for fgmap.fgmap.createmap()")
+            newmap.createmap(origin=23198)
+    
+    def test_fg_map_addmarker_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addmarker()")
+            newmap.addmarker(14107)
+            
+    def test_fgmap_addtrippolyline_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addtripolyline() arg1")
+            newmap.addtrippolyline(99338, "blue")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.addtripolyline() arg2")
+            newmap.addtrippolyline("99338", 32443)
+
+    def test_fgmap_simplemultidestinations_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Non list input error properly raised for fgmap.fgmap.simplemultidestinations()")
+            newmap.add_simple_multi_destinations("12813 198th Dr NE, Woodinville, WA 98077")
+
+    def test_showzipcode_verifyinputs(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "93338")
+        with self.assertRaises(ValueError):
+            print("Non integer input error properly raised for fgmap.fgmap.showzipcode() arg1")
+            newmap.showzipcode("93338")
+        with self.assertRaises(ValueError):
+            print("Non string input error properly raised for fgmap.fgmap.showzipcode() arg2")
+            newmap.showzipcode(93338, color=193)
         
-        #addmarker()
-        #addtrippolyline()
-        #add_simple_multi_destinations()
-        #showzipcode()
 
-
-    def test_fgmap_verifyoutputs():
-        """ Test outputs for all methods in class"""
+    #def test_fgmap_verifyoutputs(self):
+    #    """ Test outputs for all methods in class"""
         #createmap()
         #addmarker()
         #addtrippolyline()
