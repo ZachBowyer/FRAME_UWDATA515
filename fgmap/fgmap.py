@@ -177,6 +177,10 @@ class Fgmap():
             raise ValueError("Input: icon - must be a string")
         if(isinstance(color, str) == False):
             raise ValueError("Input: color - must be a string")
+        if(not addressexists(address)):
+            raise ValueError("Google can not find the specified address for argument: 'address')")
+        if(color not in self.colors):
+            raise ValueError("Color does not exist:", color)
         addresscoords = getaddresscoordinates(address)
         marker = folium.Marker(addresscoords, popup=popup,icon=folium.Icon(icon=icon, color=color))
         marker.add_to(self.map)
@@ -198,6 +202,10 @@ class Fgmap():
             raise ValueError("Input: color - must be a string")
         if(not addressexists(address)):
             raise ValueError("Google can not find the specified address (origin):", address)
+        if(address == self.origin):
+            raise ValueError("Cannot find directions to same address!", address, self.origin)
+        if(color not in self.colors):
+            raise ValueError("Color does not exist:", color)
         directioncoords = getdirections(self.origin, address)
         poly = folium.PolyLine(directioncoords, tooltip="?", color=color)
         poly.add_to(self.map)
@@ -216,6 +224,9 @@ class Fgmap():
         """
         if(isinstance(addresses, list) == False):
             raise ValueError("Input: addresses - must be a list")
+        for address in addresses:
+            if(not addressexists(address)):
+                raise ValueError("Google can not find the specified address:", address)
         index = 0
         for address in addresses:
             if(not addressexists(address)):
@@ -240,10 +251,14 @@ class Fgmap():
             raise ValueError("Input: zipcodecum - must be a integer")
         if(isinstance(color, str) == False):
             raise ValueError("Input: color - must be a string")
+        if(color not in self.colors):
+            raise ValueError("Invalid color")
         
         search = SearchEngine(simple_or_comprehensive=
                               SearchEngine.SimpleOrComprehensiveArgEnum.comprehensive)
         zipcode = search.by_zipcode(zipcodenum)
+        if(zipcode is None):
+            raise ValueError("Zipcode cannot be found", zipcodenum)
         borderpolygon = zipcode.polygon
 
         #Get coords in orientation folium requires (Lat, Lon) instead of (Lon, Lat)

@@ -1,5 +1,5 @@
 """
-Tests:
+Tests each method in fgmap/fgmap.py
 """
 
 import sys
@@ -100,6 +100,10 @@ class TestGoogleMapsMethods(unittest.TestCase):
             directions = fgmap.getdirections("a9sd8$$uf0u2-09", "99338")
 
     #Check if directions dont exist, IE OVERSEAS
+    def test_getdirections_edge_addressoverseas(self):
+        with self.assertRaises(ValueError):
+            print("Google cannot create overseas direcitons error properly raised for fgmap.getdirections()")
+            directions = fgmap.getdirections("93338", "99338")
 
     #######################################################################
     def test_getdistanceoftrip_smoke(self):
@@ -192,12 +196,9 @@ class TestGoogleMapsMethods(unittest.TestCase):
     
     def test_fgmap_createmap_edge_invalidaddressorigin(self):
         with self.assertRaises(ValueError):
+            print("Google cannot find address properly raised for fgmap.Fgmap.createmap()")
             newmap = fgmap.Fgmap()
             newmap.createmap(origin = "asd98u9832")
-            print("Google cannot find address properly raised for fgmap.Fgmap.createmap()")
-    
-    #def test_fgmap_createmap_edge_noneorigin(self):
-    #    x=1
 
     #############################################
     def test_fgmap_addmarker_verifyinputs(self):
@@ -223,14 +224,22 @@ class TestGoogleMapsMethods(unittest.TestCase):
         newmap.addmarker(address)
         self.assertIsInstance(newmap.markers[address],folium.map.Marker, "fgmap.Fgmap.addmarker() did not set self.markers[] to folium.map.Marker")
 
-    #def test_fgmap_addmarker_edge_invalidaddress(self):
-    #    x=1
-    
-    #def test_fgmap_addmarker_edge_invalidicon(self):
-    #    x=1
-    
-    #def test_fgmap_addmarker_edge_invalidcolor(self):
-    #    x=1
+    def test_fgmap_addmarker_edge_invalidaddress(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Google cannot find address error properly raised for fgmap.Fgmap.addmarker()")
+            newmap.addmarker("98sz7dtf8796we")
+
+    # Potential edge case - Invalid icon (We know right now this doesnt throw any error, justs uses default icon)
+    # ???
+
+    def test_fgmap_addmarker_edge_invalidcolor(self):
+        with self.assertRaises(ValueError):
+            print("Color does not exist error properly raised for fgmap.Fgmap.addmarker(); arg: color")
+            newmap = fgmap.Fgmap()
+            newmap.createmap(origin = "99338")
+            newmap.addmarker("99338", icon="star", color="asdds")
 
     #############################################
     def test_fgmap_addtrippolyline_verifyinputs(self):
@@ -248,17 +257,33 @@ class TestGoogleMapsMethods(unittest.TestCase):
         newmap.createmap(origin = "99338")
         address = "4555 Roosevelt Way NE, Seattle, WAS 98105"
         newmap.addtrippolyline(address, "blue")
-        print(newmap.polylines[address])
         self.assertIsInstance(newmap.polylines[address], folium.vector_layers.PolyLine, "fgmap.Fgmap.addtrippolyline() did not set self.polyLines[] to folium.vector_layers.Polyline")
 
     #Edge case where both origin and a single address are the same!
+    def test_fgmap_addtrippolyline_edge_sameaddresses(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        address = "99338"
+        with self.assertRaises(ValueError):
+            print("Address same as origin error properly raised for fgmap.Fgmap.addtrippolyline()")
+            newmap.addtrippolyline(address, "blue")
 
-    #def test_fgmap_addtrippolyline_edge_invalidaddress(self):
-    #    x=1
+    def test_fgmap_addtrippolyline_edge_invalidaddress(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        address = "90as8y222---d987"
+        with self.assertRaises(ValueError):
+            print("Invalid address error properly raised for fgmap.Fgmap.addtrippolyline()")
+            newmap.addtrippolyline(address, "blue")
     
-    #def test_fgmap_addtrippolyline_edge_invalidcolor(self):
-    #    x=1
-
+    def test_fgmap_addtrippolyline_edge_invalidcolor(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        address = "4555 Roosevelt Way NE, Seattle, WAS 98105"
+        with self.assertRaises(ValueError):
+            print("Color does not exist error properly raised for fgmap.Fgmap.addtrippolyline()")
+            newmap.addtrippolyline(address, "09ads8y087y")
+    
     #############################################
     def test_fgmap_simplemultidestinations_verifyinputs(self):
         newmap = fgmap.Fgmap()
@@ -267,8 +292,12 @@ class TestGoogleMapsMethods(unittest.TestCase):
             print("Non list input error properly raised for fgmap.fgmap.simplemultidestinations()")
             newmap.add_simple_multi_destinations("12813 198th Dr NE, Woodinville, WA 98077")
     
-    #def test_fgmap_addsimplemultidestinations_edge_invalidaddress(self):
-    #    x=1
+    def test_fgmap_addsimplemultidestinations_edge_invalidaddress(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Google maps could not find address error properly raised for fgmap.Fgmap.addsimplemultidestinations()")
+            newmap.add_simple_multi_destinations(["12813 198th Dr NE, Woodinville, WA 98077", "w---asd9i"])
 
     #############################################
     def test_showzipcode_verifyinputs(self):
@@ -281,11 +310,19 @@ class TestGoogleMapsMethods(unittest.TestCase):
             print("Non string input error properly raised for fgmap.fgmap.showzipcode(); arg: 'color'")
             newmap.showzipcode(93338, color=193)
 
-    #def test_fgmap_showzipcode_edge_invalidzipcode(self):
-    #    x=1
+    def test_fgmap_showzipcode_edge_invalidzipcode(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Invalid zip code error properly raised for fgmap.Fgmap.showzipcode()")
+            newmap.showzipcode(91287349218732199338)
 
-    #def test_fgmap_showzipcode_edge_invalidcolor(self):
-    #    x=1
-
+    def test_fgmap_showzipcode_edge_invalidcolor(self):
+        newmap = fgmap.Fgmap()
+        newmap.createmap(origin = "99338")
+        with self.assertRaises(ValueError):
+            print("Invalid color error properly raised for fgmap.Fgmap.showzipcode()")
+            newmap.showzipcode(99338, color="opaisdjh")
+    
 if __name__ == '__main__':
     unittest.main()
