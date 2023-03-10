@@ -10,6 +10,9 @@ import pandas as pd
 import streamlit as st
 import pgeocode
 import re
+import sys
+sys.path.insert(0, '../../../fgmap') #Temporary need to make it proper module import at some point
+import fgmap 
 # Setting Page configuration
 
 st.set_page_config(
@@ -18,7 +21,7 @@ st.set_page_config(
 )
 
 # Reading the data
-df = pd.read_csv("C://Users//arjun//Desktop//Quarter 2//Software Design//Project/App//sampledata515.csv")
+df = pd.read_csv("sampledata515.csv")
 df['Zip'] = df['Zip'].apply(str) # pgeocodes accepts string inputs for zip codes
     
 def zip_to_coordinates(zip_code):
@@ -198,26 +201,50 @@ def main():
         st.header('Below are your food recommendations:')
         st.subheader("")
         
+        restaurants = []
         for i in range (1,6):
             st.subheader(f'#{i}: {final_filter.iloc[i-1,11]}   _(${final_filter.iloc[i-1,-2]})_')
             st.text(f'Description: {final_filter.iloc[i-1,-3]}')
             st.text(f'From: {final_filter.iloc[i-1,2]}')
             st.text(f'Restaurant Address: {final_filter.iloc[i-1,6]}')
+            innerlist = []
+            innerlist.append(final_filter.iloc[i-1,-3])
+            innerlist.append(final_filter.iloc[i-1,2])
+            innerlist.append(final_filter.iloc[i-1,6])
+            restaurants.append(innerlist)
             st.header(" ")
         #final_filter
-        display_map()
+        display_map(restaurants, zip_input)
         st.success(f'Thank you {st.session_state.name}! We hope you enjoyed using FRAME!')
 
-def display_map():
+def display_map(restaurants, zip_input):
     '''
     Displays the restaurants suggested as well as the user's input location 
     on a map embedded into the web page.
     '''
-    df = pd.DataFrame(
-    np.random.randn(5,1)/200 + [47.6062, -122.332],
-    columns=['lat', 'lon'])
+    newmap = fgmap.Fgmap()
+    newmap.createmap(origin=zip_input)
 
-    st.map(df)    
+    #Draw trip line and add point at each restaurant 
+    index = 0
+    for restaurant in restaurants:
+        description = restaurant[0]
+        name = restaurant[1]
+        address = restaurant[2]
+        newmap.addtrippolyline(address, color=newmap.colors[index])
+        newmap.addmarker(address, popup=name, icon="star", color=newmap.colors[index])
+        index += 1
+    
+    newmap.showzipcode(zip_input)
+    htmlstring = newmap.returnhtml()
+    st.components.v1.html(htmlstring, width=700, height=700, scrolling=True)  
+    
+    #How to get address distances
+    #distances = []
+    #for address in restaurants:
+    #    distance = getdistanceoftrip(originAddress, address)
+    #    duration = getdurationoftrip(originAddress, address)
+        #Return string: "50 miles" #str.split()
 
 if __name__ == '__main__':
     main()
