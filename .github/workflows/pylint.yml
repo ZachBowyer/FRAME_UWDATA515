@@ -1,4 +1,4 @@
-# Pylints all python files in the directory
+# Pylints specific python files
 name: Pylint
 
 on: [push]
