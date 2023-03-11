@@ -23,6 +23,6 @@ jobs:
     - name: Create Conda Environment
       run: conda env create --file environment_linux.yml
     - name: Activate Conda Environment
-      run: conda activate myenv
+      run: conda activate FRAME_LINUX 
     - name: Test with Python
       run: python UnitTests/test_fgmap.py
