@@ -180,8 +180,9 @@ class TestGoogleMapsMethods(unittest.TestCase):
         duration = fgmap.getdurationoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
         self.assertIsInstance(duration, str, "getdurationoftrip() did not return string")
 
-    # As of 3/10/2023, the return went from 3 hours 47 minutes to 3 hours 48 minutes, this is likely due to a small change in traffic
-    # Therefore, this expectation test will never be 100% fool proof, so we will need to remove it
+    # As of 3/10/2023, the return went from 3 hours 47 minutes to 3 hours 48 minutes,
+    #  this is likely due to a small change in traffic
+    #  Therefore, this expectation test will never be 100% fool proof, so we will need to remove it
     #def test_getdurationoftrip_expectation(self):
     #    """ Expected output for fgmap.getdurationoftrip(): String """
     #    duration = fgmap.getdurationoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
