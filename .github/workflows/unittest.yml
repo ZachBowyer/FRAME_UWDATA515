@@ -24,6 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         conda env create --name FRAME_LINUX --file=environment_linux.yml
         conda init bash
-        conda activate FRAME_LINUX
+        source activate FRAME_LINUX
         conda info
         python UnitTests/test_fgmap.py
