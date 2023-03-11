@@ -147,10 +147,12 @@ class TestGoogleMapsMethods(unittest.TestCase):
         distance = fgmap.getdistanceoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
         self.assertIsInstance(distance, str, "getdistanceoftrip() did not return string")
 
-    def test_getdistanceoftrip_expectation(self):
-        """ Compare to expected output """
-        distance = fgmap.getdistanceoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
-        self.assertEqual(distance, "231 mi", "getdistanceoftrip() did not return as expected")
+    # As of 3/10/2023, a similar function had a very slight change. The same issue applies here.
+    # Therefore, this expectation test will never be 100% fool proof, so we will need to remove it
+    #def test_getdistanceoftrip_expectation(self):
+    #    """ Compare to expected output """ #This will probably slightly change
+    #    distance = fgmap.getdistanceoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
+    #    self.assertEqual(distance, "231 mi", "getdistanceoftrip() did not return as expected")
 
     def test_getdistanceoftrip_edge_invalidaddress(self):
         """ Test invalid address """
@@ -178,11 +180,13 @@ class TestGoogleMapsMethods(unittest.TestCase):
         duration = fgmap.getdurationoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
         self.assertIsInstance(duration, str, "getdurationoftrip() did not return string")
 
-    def test_getdurationoftrip_expectation(self): #What if the route changes...
-        """ Expected output for fgmap.getdurationoftrip(): String """
-        duration = fgmap.getdurationoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
-        self.assertEqual(duration, "3 hours 47 mins",
-                        "getdistanceoftrip() did not return as expected")
+    # As of 3/10/2023, the return went from 3 hours 47 minutes to 3 hours 48 minutes, this is likely due to a small change in traffic
+    # Therefore, this expectation test will never be 100% fool proof, so we will need to remove it
+    #def test_getdurationoftrip_expectation(self):
+    #    """ Expected output for fgmap.getdurationoftrip(): String """
+    #    duration = fgmap.getdurationoftrip("99338", "1300 E Pine St, Seattle, WA 98122")
+    #    self.assertEqual(duration, "3 hours 47 mins",
+    #                    "getdistanceoftrip() did not return as expected")
 
     def test_getdurationoftrip_edge_invalidaddress(self):
         """ Test invalid address """
