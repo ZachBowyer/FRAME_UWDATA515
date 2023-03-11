@@ -10,9 +10,6 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.10.8"]
-    defaults:
-      run:
-        shell: bash -l {0}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -20,10 +17,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install from conda enviroment
+      shell: bash
       run: |
         python -m pip install --upgrade pip
         conda env create --name FRAME_LINUX --file=environment_linux.yml
-        conda init bash
-        source activate FRAME_LINUX
+        conda activate FRAME_LINUX
         conda info
         python UnitTests/test_fgmap.py
