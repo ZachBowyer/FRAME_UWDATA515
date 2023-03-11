@@ -74,6 +74,6 @@ Change Requires-Dist: sqlalchemy (>=1.4.1<2.0.0) to Requires-Dist: sqlalchemy (>
 conda env export > environment_linux.yml
 
 # PIP ISNT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-conda env create --name FRAME_LINUX2 --file=environment_linux.yml
+conda env create --name FRAME_LINUX --file=environment_linux.yml
 
 #/mnt/c/Users/Zach/Desktop/UW_Classes/2023Winter/Data515/FRAME_UWDATA515
