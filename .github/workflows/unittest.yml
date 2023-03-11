@@ -24,6 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         conda env create --name FRAME_LINUX --file=environment_linux.yml
         $CONDA/bin/activate FRAME_LINUX
-    - name: Analysing the code with pylint
-      run: |
+        conda info
+        conda activate FRAME_LINUX
         python UnitTests/test_fgmap.py
