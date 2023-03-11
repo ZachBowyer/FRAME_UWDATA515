@@ -1,28 +1,104 @@
-name: Activate Conda Environment
+#name: Activate Conda Environment
+#
+#on:
+#  push:
+#  
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v2
+#    - name: Set up Python 3.10.8
+#      uses: actions/setup-python@v2
+#      with:
+#        python-version: 3.10.8
+#    - name: Install Conda
+#      run: |
+#        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+#        bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
+#        export PATH="$HOME/miniconda/bin:$PATH"
+#        echo ". $HOME/miniconda/etc/profile.d/conda.sh" >> $HOME/.bashrc
+#        conda activate base
+#    - name: Create Conda Environment
+#      run: conda env create --file environment_linux.yml
+#    - name: Activate Conda Environment
+#      run: conda activate FRAME_LINUX 
+#    - name: Test with Python
+#      run: python UnitTests/test_fgmap.py
 
+name: condatest
+
+# What is the event that triggers this workflow? Options include
+# push, pull_request, create, issues, etc. This configuration says
+# that you should run on pushes to the main branch (ie after a PR
+# is merged), or when a pull request is created to merge into main.
 on:
   push:
-  
+    branches:
+      - main
+  pull_request:
+    # Configuring this means that your PRs will get a GitHub comment
+    # from Coveralls with your coverage.
+    branches:
+      - main
+
+# A list of jobs to run as part of the workflow
 jobs:
-  build:
+
+  # Each job gets a name. This one builds/tests all branches.
+  build_test:
+
+    # Provide a runner. Options are listed on GitHub, but include
+    # windows, ubuntu, and macos (latest, as well as specific versions)
     runs-on: ubuntu-latest
+
+    # In order to get Conda environments to work properly, we need to
+    # tell the runner to start up the bash shell in a way that respects
+    # the changes Conda makes to bash profile files.
+    # More at:
+    # https://github.com/marketplace/actions/setup-miniconda#use-a-default-shell
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    # We specify all versions of Python that we want to validate.
+    # GitHub will run the tests for each of these Python versions.
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
+    # The actual workflow steps!
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Set up Python 3.10.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.10.8
-    - name: Install Conda
-      run: |
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-        bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
-        export PATH="$HOME/miniconda/bin:$PATH"
-        echo ". $HOME/miniconda/etc/profile.d/conda.sh" >> $HOME/.bashrc
-        conda activate base
-    - name: Create Conda Environment
-      run: conda env create --file environment_linux.yml
-    - name: Activate Conda Environment
-      run: conda activate FRAME_LINUX 
-    - name: Test with Python
-      run: python UnitTests/test_fgmap.py
+      # First, check out the repository for the current branch.
+      - uses: actions/checkout@v3
+
+      # Then set up Python with a python version from the matrix.
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # This is an Action published by the Conda team to get your
+      # Conda environment set up using your environment.yml file.
+      # More at https://github.com/marketplace/actions/setup-miniconda
+      - name: Set up conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          # Use the environment name from your environment.yml file
+          activate-environment: FRAME_LINUX
+          # The name of the environment file you want conda to use
+          environment-file: environment_linux.yml
+          # Whether you want conda to automatically update the conda
+          # version (helpful when some runners have old versions of
+          # conda)
+          auto-update-conda: true
+          # Which version of python you want conda to use
+          python-version: ${{ matrix.python-version }}
+          # We don't need the base environment, so don't activate it
+          auto-activate-base: false
+
+      # Next step: run the unit tests with code coverage.
+      - name: Unit tests
+        run: |
+          python UnitTests/test_fgmap.py
