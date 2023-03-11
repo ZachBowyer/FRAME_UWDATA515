@@ -1,34 +1,4 @@
-#name: Activate Conda Environment
-#
-#on:
-#  push:
-#  
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Checkout code
-#      uses: actions/checkout@v2
-#    - name: Set up Python 3.10.8
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: 3.10.8
-#    - name: Install Conda
-#      run: |
-#        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-#        bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
-#        export PATH="$HOME/miniconda/bin:$PATH"
-#        echo ". $HOME/miniconda/etc/profile.d/conda.sh" >> $HOME/.bashrc
-#        conda activate base
-#    - name: Create Conda Environment
-#      run: conda env create --file environment_linux.yml
-#    - name: Activate Conda Environment
-#      run: conda activate FRAME_LINUX 
-#    - name: Test with Python
-#      run: python UnitTests/test_fgmap.py
-
-
-name: condatest
+name: Unittest
 
 # What is the event that triggers this workflow? Options include
 # push, pull_request, create, issues, etc. This configuration says
@@ -90,9 +60,6 @@ jobs:
           activate-environment: FRAME_LINUX
           # The name of the environment file you want conda to use
           environment-file: environment_linux.yml
-          # Whether you want conda to automatically update the conda
-          # version (helpful when some runners have old versions of
-          # conda)
           auto-update-conda: true
           # Which version of python you want conda to use
           python-version: ${{ matrix.python-version }}
