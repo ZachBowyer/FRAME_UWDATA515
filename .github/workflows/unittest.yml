@@ -20,7 +20,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         conda env create --name FRAME_LINUX --file=environment_linux.yml
-        conda init TESTSHELL
+        conda init bash
         conda activate FRAME_LINUX
     - name: Analysing the code with pylint
       run: |
