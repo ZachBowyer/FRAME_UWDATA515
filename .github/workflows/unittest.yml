@@ -27,6 +27,7 @@
 #    - name: Test with Python
 #      run: python UnitTests/test_fgmap.py
 
+
 name: condatest
 
 # What is the event that triggers this workflow? Options include
@@ -101,4 +102,5 @@ jobs:
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
         run: |
-          python UnitTests/test_fgmap.py
+          cd UnitTests
+          python test_fgmap.py
