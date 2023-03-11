@@ -26,6 +26,7 @@ pip install numpy
 pip install pandas  
 pip install streamlit  
 pip install pgeocode (Temporary?)  
+pip install coverage
 python setup.py  
 
 # Project description:
