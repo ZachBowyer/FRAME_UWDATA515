@@ -4,15 +4,7 @@ name: Unittest
 # push, pull_request, create, issues, etc. This configuration says
 # that you should run on pushes to the main branch (ie after a PR
 # is merged), or when a pull request is created to merge into main.
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    # Configuring this means that your PRs will get a GitHub comment
-    # from Coveralls with your coverage.
-    branches:
-      - main
+on: [push, pull_request]
 
 # A list of jobs to run as part of the workflow
 jobs:
