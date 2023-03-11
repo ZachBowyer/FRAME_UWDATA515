@@ -16,6 +16,7 @@ jobs:
           activate-environment: anaconda-client-env
           environment-file: environment_linux.yml
           auto-activate-base: false
+      - name: "Test conda"
       - run: |
           conda info
           conda list
