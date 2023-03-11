@@ -18,8 +18,8 @@ jobs:
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
         bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
         export PATH="$HOME/miniconda/bin:$PATH"
-        conda init bash
-        source ~/.bashrc
+        echo ". $HOME/miniconda/etc/profile.d/conda.sh" >> $HOME/.bashrc
+        conda activate base
     - name: Create Conda Environment
       run: conda env create --file environment_linux.yml
     - name: Activate Conda Environment
