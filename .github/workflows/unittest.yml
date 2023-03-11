@@ -19,7 +19,7 @@ jobs:
         bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
         export PATH="$HOME/miniconda/bin:$PATH"
         conda init bash
-        exec $SHELL
+        source ~/.bashrc
     - name: Create Conda Environment
       run: conda env create --file environment_linux.yml
     - name: Activate Conda Environment
