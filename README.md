@@ -16,6 +16,7 @@ conda activate FRAME
 python setup.py
 
 ## UNIX
+pip install googlemaps folium polyline uszipcode gdown numpy pandas streamlit geocode
 pip install googlemaps  
 pip install folium  
 pip install polyline  

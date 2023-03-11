@@ -33,6 +33,9 @@ There is a broken export issue which requires a manual fix
 # conda info --envs (See if it exists)
 # conda activate FRAME_windows
 
+
+
+
 """
 LINUX (WIP)
 """
@@ -51,3 +54,26 @@ LINUX (WIP)
 #Navigate to ~/miniconda3/envs/FRAME_linux/lib/python3.9/site-packages/sqlalchemy_mate-1.4.28.3.dist-info/METADATA
 #vi METADATA
 #Change Requires-Dist: sqlalchemy (>=1.4.1<2.0.0) to Requires-Dist: sqlalchemy (>=1.4.1,<2.0.0)
+
+#Broken pip install in wsl conda env fix
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install python3-pip
+
+#LINUX conda env 
+conda create --name FRAME_LINUX python=3.10.8
+y
+conda activate FRAME_LINUX
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install python3-pip
+pip install googlemaps folium polyline uszipcode gdown numpy pandas streamlit pgeocode
+cd ~/miniconda3/envs/FRAME_LINUX/lib/python3.10/site-packages/sqlalchemy_mate-1.4.28.3.dist-info
+vi METADATA
+Change Requires-Dist: sqlalchemy (>=1.4.1<2.0.0) to Requires-Dist: sqlalchemy (>=1.4.1,<2.0.0)
+conda env export > environment_linux.yml
+
+# PIP ISNT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+conda env create --name FRAME_LINUX2 --file=environment_linux.yml
+
+#/mnt/c/Users/Zach/Desktop/UW_Classes/2023Winter/Data515/FRAME_UWDATA515

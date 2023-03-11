@@ -1,5 +1,6 @@
-# Pylints specific python files
-name: Pylint
+#Will run unittests
+
+name: Unittest
 
 on: [push]
 
@@ -15,11 +16,9 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Install from conda enviroment
       run: |
         python -m pip install --upgrade pip
-        pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint fgmap/fgmap.py
-        pylint UnitTests/test_fgmap.py
+        python UnitTests/test_fgmap.py
