@@ -61,5 +61,8 @@ jobs:
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
         run: |
+          pip install coverage
           cd UnitTests
           python test_fgmap.py
+          coverage run test_fgmap.py
+          coverage report
