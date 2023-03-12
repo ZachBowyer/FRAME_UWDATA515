@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d3d08ba88877f4d0547557cf7538ae7f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_d3d08ba88877f4d0547557cf7538ae7f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d3d08ba88877f4d0547557cf7538ae7f = L.map(
+                "map_d3d08ba88877f4d0547557cf7538ae7f",
+                {
+                    center: [47.615561, -122.3152299],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 14,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_905ad56606cf35f47b540c361f8ec644 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            var marker_b9c5c8a3f00d001294fbfa864d7ea077 = L.marker(
+                [47.615561, -122.3152299],
+                {}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            var icon_c72939b05becfdbeb6394897d09038e7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b9c5c8a3f00d001294fbfa864d7ea077.setIcon(icon_c72939b05becfdbeb6394897d09038e7);
+        
+    
+        var popup_50cbeca21b68e03e16c7cf5741664ab3 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b22935de698c2622efe2e1025e915c0b = $(`<div id="html_b22935de698c2622efe2e1025e915c0b" style="width: 100.0%; height: 100.0%;">origin</div>`)[0];
+                popup_50cbeca21b68e03e16c7cf5741664ab3.setContent(html_b22935de698c2622efe2e1025e915c0b);
+            
+        
+
+        marker_b9c5c8a3f00d001294fbfa864d7ea077.bindPopup(popup_50cbeca21b68e03e16c7cf5741664ab3)
+        ;
+
+        
+    
+    
+            var poly_line_ddb328a56c42d3e13339c5399d28875c = L.polyline(
+                [[47.61528, -122.31533], [47.61528, -122.3117], [47.61526, -122.31155], [47.61513, -122.31125], [47.61504, -122.31147], [47.61459, -122.31147], [47.61411, -122.31146], [47.61291, -122.31148], [47.6129, -122.31087], [47.6129, -122.30951], [47.61291, -122.30817], [47.61291, -122.30672], [47.61291, -122.30646], [47.61292, -122.30627], [47.61267, -122.30627], [47.61039, -122.30635], [47.61039, -122.30636], [47.61039, -122.30637], [47.6104, -122.30638], [47.61039, -122.3064], [47.61037, -122.30643], [47.61034, -122.30642], [47.61033, -122.30638], [47.61033, -122.30636], [47.61034, -122.30635], [47.61004, -122.30633], [47.60936, -122.30634], [47.60904, -122.30633], [47.60717, -122.30634], [47.6053, -122.30635]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            poly_line_ddb328a56c42d3e13339c5399d28875c.bindTooltip(
+                `<div>
+                     ?
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_fd9e911b7fd50c153686fa0a6e279a16 = L.marker(
+                [47.6052967, -122.306065],
+                {}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            var icon_721e56a92667e9c3837dfcad36aa7135 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_fd9e911b7fd50c153686fa0a6e279a16.setIcon(icon_721e56a92667e9c3837dfcad36aa7135);
+        
+    
+        var popup_87ff2485832fa9465bca5fb700b8c0c6 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_87cb8eca9eca7343d0f37e862e80173e = $(`<div id="html_87cb8eca9eca7343d0f37e862e80173e" style="width: 100.0%; height: 100.0%;">402 20th Ave, Seattle, WA 98122</div>`)[0];
+                popup_87ff2485832fa9465bca5fb700b8c0c6.setContent(html_87cb8eca9eca7343d0f37e862e80173e);
+            
+        
+
+        marker_fd9e911b7fd50c153686fa0a6e279a16.bindPopup(popup_87ff2485832fa9465bca5fb700b8c0c6)
+        ;
+
+        
+    
+    
+            var poly_line_700b79d1fd87a7f913f2635e5e12422f = L.polyline(
+                [[47.61528, -122.31533], [47.61527, -122.31659], [47.61527, -122.31686], [47.61489, -122.31686], [47.6141, -122.31684], [47.61349, -122.31683], [47.61293, -122.31679], [47.61234, -122.31678], [47.61155, -122.31678], [47.61078, -122.31676], [47.60954, -122.3168], [47.60886, -122.3168], [47.60831, -122.31678], [47.60667, -122.31679], [47.6064, -122.3168], [47.6062, -122.31679], [47.6062, -122.31599], [47.6062, -122.31567]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            poly_line_700b79d1fd87a7f913f2635e5e12422f.bindTooltip(
+                `<div>
+                     ?
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_a1c59e085560125c30914dec53f842bc = L.marker(
+                [47.6063234, -122.3156688],
+                {}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            var icon_eff4ee137a695ef8e71d2b2b2f04b13f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_a1c59e085560125c30914dec53f842bc.setIcon(icon_eff4ee137a695ef8e71d2b2b2f04b13f);
+        
+    
+        var popup_d2910ac15f52a0c67247e37b7095cd94 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fb7a3c782bf5cbe5e1f465b492e1defd = $(`<div id="html_fb7a3c782bf5cbe5e1f465b492e1defd" style="width: 100.0%; height: 100.0%;">1224 E Jefferson St, Seattle, WA 98122</div>`)[0];
+                popup_d2910ac15f52a0c67247e37b7095cd94.setContent(html_fb7a3c782bf5cbe5e1f465b492e1defd);
+            
+        
+
+        marker_a1c59e085560125c30914dec53f842bc.bindPopup(popup_d2910ac15f52a0c67247e37b7095cd94)
+        ;
+
+        
+    
+    
+            var poly_line_9590bc6b3d272c6ec13e370285ff371a = L.polyline(
+                [[47.61528, -122.31533], [47.61527, -122.31659], [47.61528, -122.3171], [47.61527, -122.31817], [47.61526, -122.32046], [47.61524, -122.32163], [47.61525, -122.32301]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            poly_line_9590bc6b3d272c6ec13e370285ff371a.bindTooltip(
+                `<div>
+                     ?
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_7137d6643843edee6d20e1bdffd14459 = L.marker(
+                [47.6150545, -122.3229866],
+                {}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            var icon_1adb8d927c7ee1ae1aa600614590f6cd = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_7137d6643843edee6d20e1bdffd14459.setIcon(icon_1adb8d927c7ee1ae1aa600614590f6cd);
+        
+    
+        var popup_71e7f374cff6954ac865a02f1af70e3b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_021e4b66066a5477b4eaa01692d40770 = $(`<div id="html_021e4b66066a5477b4eaa01692d40770" style="width: 100.0%; height: 100.0%;">707 E Pine St, Seattle, WA 98122</div>`)[0];
+                popup_71e7f374cff6954ac865a02f1af70e3b.setContent(html_021e4b66066a5477b4eaa01692d40770);
+            
+        
+
+        marker_7137d6643843edee6d20e1bdffd14459.bindPopup(popup_71e7f374cff6954ac865a02f1af70e3b)
+        ;
+
+        
+    
+    
+            var poly_line_4d584f81b2220efd014def3b8493d0d0 = L.polyline(
+                [[47.61528, -122.31533], [47.61527, -122.31659], [47.61527, -122.31686], [47.61537, -122.31687], [47.61607, -122.31688], [47.6168, -122.31689], [47.61774, -122.31691], [47.62026, -122.31695], [47.62089, -122.31694], [47.62104, -122.3169], [47.62125, -122.31683], [47.62148, -122.31677], [47.62191, -122.31678], [47.62313, -122.31675], [47.62313, -122.31754], [47.62313, -122.31807], [47.62314, -122.31878], [47.6232, -122.31887], [47.62313, -122.31895], [47.62314, -122.31939], [47.62314, -122.31983], [47.62315, -122.31983], [47.62316, -122.31983], [47.62317, -122.31984], [47.62319, -122.31986], [47.6232, -122.31993], [47.62319, -122.32], [47.62316, -122.32002], [47.62315, -122.32003], [47.62314, -122.32003], [47.62314, -122.32094], [47.62378, -122.32095]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            poly_line_4d584f81b2220efd014def3b8493d0d0.bindTooltip(
+                `<div>
+                     ?
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_772cb64fb3820988f70c05a43d08ab3b = L.marker(
+                [47.6237849, -122.3206273],
+                {}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            var icon_c45b7a2c84182326b78a32fc4195e55d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_772cb64fb3820988f70c05a43d08ab3b.setIcon(icon_c45b7a2c84182326b78a32fc4195e55d);
+        
+    
+        var popup_2faa171e44f94272ebf86094684a4cae = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_513ebb803328cbd728949de2f91d9bee = $(`<div id="html_513ebb803328cbd728949de2f91d9bee" style="width: 100.0%; height: 100.0%;">532 Broadway E, Seattle, WA 98102</div>`)[0];
+                popup_2faa171e44f94272ebf86094684a4cae.setContent(html_513ebb803328cbd728949de2f91d9bee);
+            
+        
+
+        marker_772cb64fb3820988f70c05a43d08ab3b.bindPopup(popup_2faa171e44f94272ebf86094684a4cae)
+        ;
+
+        
+    
+    
+            var poly_line_3caa645d23fdb29a5327e6efe65a976e = L.polyline(
+                [[47.61528, -122.31533], [47.59448, -122.3183], [47.59193, -122.24518], [47.55357, -122.07477], [47.50904, -121.8794], [47.42188, -121.59366], [47.3969, -121.45095], [47.42236, -121.432], [47.40377, -121.40429], [47.33999, -121.3534], [47.28461, -121.28185], [47.21323, -121.10743], [47.1629, -120.86938], [47.08065, -120.73156], [46.97492, -120.54804], [46.88805, -120.43019], [46.84331, -120.37689], [46.77988, -120.37411], [46.69091, -120.45628], [46.63166, -120.51831], [46.5811, -120.47207], [46.51908, -120.45865], [46.48094, -120.40792], [46.37112, -120.21518], [46.31425, -120.05276], [46.19037, -119.70589], [46.18605, -119.60282], [46.13103, -119.5928], [46.13044, -119.51459], [46.13083, -119.37956], [46.10828, -119.36996], [45.94406, -119.34127], [45.90525, -119.33125], [45.82314, -119.38379], [45.78673, -119.34406], [45.74729, -119.11431], [45.69278, -118.93539], [45.63288, -118.67596], [45.58687, -118.6397], [45.58413, -118.57821], [45.59646, -118.48901], [45.55619, -118.46326], [45.43297, -118.36259], [45.37748, -118.30494], [45.34861, -118.20692], [45.30533, -118.04612], [45.19886, -118.01435], [45.12406, -117.96311], [44.97755, -117.88603], [44.86536, -117.81712], [44.75345, -117.80995], [44.62631, -117.50997], [44.522, -117.3875], [44.40612, -117.31306], [44.14738, -117.10805], [44.0299, -116.95129], [43.88389, -116.80104], [43.75195, -116.71517], [43.67827, -116.68809], [43.59855, -116.54956], [43.57012, -116.21125], [43.44306, -116.07096], [43.17152, -115.73582], [43.0538, -115.58487], [42.94612, -115.42367], [42.97309, -115.20227], [42.93633, -114.95274], [42.79342, -114.74967], [42.69759, -114.52493], [42.60521, -114.34988], [42.57418, -114.14271], [42.57653, -113.91394], [42.56872, -113.68656], [42.56844, -113.54171], [42.52181, -113.43217], [42.3606, -113.25585], [42.25392, -113.10922], [41.97626, -112.79186], [41.90317, -112.58212], [41.88109, -112.47941], [41.81548, -112.36064], [41.78598, -112.27634], [41.71963, -112.22671], [41.60406, -112.08054], [41.44472, -112.05657], [41.1971, -111.99875], [41.1498, -111.96913], [41.13811, -111.87353], [41.13096, -111.77708], [41.07829, -111.72423], [41.05092, -111.62884], [41.06379, -111.54724], [40.97816, -111.44625], [41.02041, -111.36221], [41.08161, -111.24324], [41.23389, -111.08055], [41.26227, -110.88659], [41.29904, -110.76754], [41.29863, -110.64138], [41.37285, -110.25358], [41.48153, -110.0269], [41.53447, -109.93499], [41.54244, -109.73746], [41.56281, -109.5437], [41.52874, -109.39741], [41.60953, -109.22456], [41.59899, -109.15504], [41.62955, -109.08129], [41.68124, -108.92062], [41.68494, -108.80873], [41.64724, -108.67555], [41.63323, -108.37815], [41.6693, -108.00229], [41.74644, -107.59799], [41.77951, -107.2531], [41.76301, -107.01251], [41.74869, -106.50284], [41.55472, -106.09835], [41.43641, -105.91662], [41.36414, -105.77844], [41.35055, -105.65393], [41.29971, -105.60311], [41.20607, -105.59918], [41.09482, -105.52191], [40.99488, -105.412], [40.86256, -105.26164], [40.76624, -105.16687], [40.75484, -105.11503], [40.73038, -104.99366], [40.54663, -104.99808], [40.40929, -104.9932], [40.15882, -104.97914], [40.01378, -104.98095], [39.97596, -104.95926], [39.95157, -104.86649], [39.91382, -104.78181], [39.8363, -104.74711], [39.765, -104.71675], [39.74002, -104.6803], [39.73928, -104.55574], [39.73793, -104.41007], [39.73334, -104.31437], [39.69814, -104.1605], [39.61404, -104.04029], [39.47339, -103.94358], [39.31077, -103.82416], [39.27318, -103.71704], [39.17544, -103.53881], [39.01507, -103.30442], [38.92382, -103.18915], [38.81921, -102.98492], [38.76404, -102.80652], [38.7164, -102.77596], [38.56901, -102.78614], [38.47832, -102.7856], [38.45408, -102.73061], [38.27524, -102.71989], [38.11537, -102.72281], [38.11557, -102.62205], [37.74726, -102.60244], [37.38055, -102.61529], [37.1461, -102.61359], [37.03898, -102.53629], [36.83342, -102.51789], [36.74977, -102.51777], [36.71341, -102.47951], [36.62215, -102.36938], [36.33304, -102.0743], [35.84139, -101.97349], [35.65828, -101.95972], [35.52727, -101.92166], [35.43252, -101.86076], [35.31836, -101.83167], [35.2748, -101.83369], [35.26514, -101.77614], [35.19268, -101.7349], [35.17839, -101.58062], [35.03258, -101.14637], [34.90467, -100.7796], [34.86031, -100.65096], [34.72306, -100.53295], [34.50287, -100.37697], [34.31268, -99.82203], [34.24925, -99.47197], [34.1492, -99.23205], [34.0443, -98.9191], [33.99201, -98.82715], [33.96568, -98.67912], [33.94948, -98.5624], [33.9081, -98.5011], [33.78598, -98.16367], [33.6852, -98.07828], [33.59804, -97.9355], [33.48787, -97.79942], [33.38684, -97.72071], [33.22779, -97.59331], [33.14322, -97.49947], [33.04759, -97.47506], [32.87303, -97.31698], [32.8402, -97.23921], [32.83705, -96.98751], [32.79246, -96.79296], [32.74497, -96.72673], [32.71389, -96.70002]],
+                {"bubblingMouseEvents": true, "color": "darkred", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "darkred", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            poly_line_3caa645d23fdb29a5327e6efe65a976e.bindTooltip(
+                `<div>
+                     ?
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_07b8e3f9527ded684e770466c0ada5fd = L.marker(
+                [32.7138898, -96.699362],
+                {}
+            ).addTo(map_d3d08ba88877f4d0547557cf7538ae7f);
+        
+    
+            var icon_7bf4ac431783237af8acf3057af06cba = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "star", "iconColor": "white", "markerColor": "darkred", "prefix": "glyphicon"}
+            );
+            marker_07b8e3f9527ded684e770466c0ada5fd.setIcon(icon_7bf4ac431783237af8acf3057af06cba);
+        
+    
+        var popup_b0faf169ce53729da7cbfe9ceafeb1f8 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d18671ccc04c9c5d7f52bba11aae9a5c = $(`<div id="html_d18671ccc04c9c5d7f52bba11aae9a5c" style="width: 100.0%; height: 100.0%;">116 N Jim Miller Rd, Dallas, TX 75217</div>`)[0];
+                popup_b0faf169ce53729da7cbfe9ceafeb1f8.setContent(html_d18671ccc04c9c5d7f52bba11aae9a5c);
+            
+        
+
+        marker_07b8e3f9527ded684e770466c0ada5fd.bindPopup(popup_b0faf169ce53729da7cbfe9ceafeb1f8)
+        ;
+
+        
+    
+</script>
+</html>
