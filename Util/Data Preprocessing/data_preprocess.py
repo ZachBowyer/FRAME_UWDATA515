@@ -6,6 +6,14 @@ Created on Mon Feb 27 14:04:20 2023
 """
 
 import pandas as pd
+import re
+
+# create a function to map each category using the regex patterns
+def map_category(category):
+    for key, pattern in patterns.items():
+        if re.search(pattern, category, re.IGNORECASE):
+            return key
+
 
 # Cleaning of KingCounty Inspection data
 king_data = pd.read_csv('seagov.csv')
@@ -62,6 +70,28 @@ front_end_data = front_end_data.rename(columns={'name_x': 'RestaurantName', 'sco
                                                 'category_x': 'RestaurantCategory', 'category_y': 'Menuitemcategory',
                                                 'name_y': 'DishName'})
 front_end_data = front_end_data.drop(columns=['id','restaurant_id'])
-front_end_data.to_csv('Datafordashboard.csv',index=False)
-#front_end_data[front_end_data['id']==7687]
+
+#front_end_data.to_csv('Datafordashboard.csv',index=False)
+
+
+# define a regular expression pattern to match each category
+patterns = {
+    'Appetizers': r'\b(Appetizers|Starters|Mezze|Fries|Nuggets)\b',
+    'Entrees': r'\b(Breakfast|Dinner|Lunch|Entrees|Plates|Burritos|Tacos|Bowls|Pasta|Burger|Biryani|Curries|Pizza|Pizzas|Indian)\b',
+    'Beverages': r'\b(Beverages|Drinks|Teas|Shakes|Coffee|Coffees|Beverage)\b',
+    'Sides': r'\b(Side Orders|Sides|Combo Sides|Contorni|Condiments|Sides)\b',
+    'Salads': r'\b(Salads)\b',
+    'Platters': r'\b(Platters|Plate)\b',
+    'Desserts': r'\b(Desserts|Ice Cream|Pies|Cupcakes|Bake at Home|Dessert|Yogurt|Bakery)\b',
+    'Snacks': r'\b(Snacks|Savory Pies|Cookies|Snack)\b',
+    'Other': r'.*'
+}
+
+
+# apply the mapping function to the category column
+front_end_data['Category'] = front_end_data['Menuitemcategory'].apply(map_category)
+
+
+# save the updated dataframe to a new file
+front_end_data.to_csv('Datafordashboard.csv', index=False)
 
