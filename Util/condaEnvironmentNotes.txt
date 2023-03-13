@@ -1,0 +1,79 @@
+"""
+Information for manually creating/loading anaconda environment from WINDOWS
+There is a broken export issue which requires a manual fix 
+"""
+#Making environment from scratch
+# conda remove --name FRAME_windows --all
+# conda create --name FRAME_windows python=3.9.0
+# conda activate FRAME_windows
+# pip install googlemaps
+# pip install folium
+# pip install polyline
+# pip install uszipcode
+
+#Export environemnt
+# conda env export > environment.yml
+# conda env export --from-history
+# conda env export --no-build > environment.yml
+
+#Broken export fix:
+# https://github.com/conda/conda/issues/9624
+# Opened powershell
+# Navigate to c:\Users\<user>\Anaconda3\envs\<env name>\Lib\site-packages\
+# Get-ChildItem -File -Recurse -Filter METADATA | Select-String "1.4.1<2.0.0" | Select-Object -Unique Path
+# C:\Users\Zach\anaconda3\envs\FRAME_windows\Lib\site-packages\sqlalchemy_mate-1.4.28.3.dist-info\METADATA
+# Requires-Dist: sqlalchemy (>=1.4.1<2.0.0) to Requires-Dist: sqlalchemy (>=1.4.1,<2.0.0)
+
+# Delete environment
+# conda deactivate
+# conda remove --name FRAME_windows --all
+
+# Install environment from yml file
+# conda env create --name FRAME_windows --file=environment.yml
+# conda info --envs (See if it exists)
+# conda activate FRAME_windows
+
+
+
+
+"""
+LINUX (WIP)
+"""
+#Making environment from scratch
+# conda remove --name FRAME_linux --all
+# conda create --name FRAME_linux python=3.9.0
+# pip install googlemaps
+# pip install folium
+# pip install polyline
+# pip install uszipcode
+
+#Export environment
+# conda env export > environment_linux.yml
+
+#Broken export fix
+#Navigate to ~/miniconda3/envs/FRAME_linux/lib/python3.9/site-packages/sqlalchemy_mate-1.4.28.3.dist-info/METADATA
+#vi METADATA
+#Change Requires-Dist: sqlalchemy (>=1.4.1<2.0.0) to Requires-Dist: sqlalchemy (>=1.4.1,<2.0.0)
+
+#Broken pip install in wsl conda env fix
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install python3-pip
+
+#LINUX conda env 
+conda create --name FRAME_LINUX python=3.10.8
+y
+conda activate FRAME_LINUX
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install python3-pip
+pip install googlemaps folium polyline uszipcode gdown numpy pandas streamlit pgeocode
+cd ~/miniconda3/envs/FRAME_LINUX/lib/python3.10/site-packages/sqlalchemy_mate-1.4.28.3.dist-info
+vi METADATA
+Change Requires-Dist: sqlalchemy (>=1.4.1<2.0.0) to Requires-Dist: sqlalchemy (>=1.4.1,<2.0.0)
+conda env export > environment_linux.yml
+
+# PIP ISNT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+conda env create --name FRAME_LINUX --file=environment_linux.yml
+
+#/mnt/c/Users/Zach/Desktop/UW_Classes/2023Winter/Data515/FRAME_UWDATA515

@@ -7,6 +7,28 @@ Raman SV
 Arjun Sharma  
 Adithyaa Vaasen  
 
+# SETUP
+## WINDOWS
+install anaconda https://www.anaconda.com/ 
+conda env create --name FRAME_windows --file=environment_windows.yml
+conda info --envs (See if it exists)
+conda activate FRAME
+python setup.py
+
+## UNIX
+pip install googlemaps folium polyline uszipcode gdown numpy pandas streamlit geocode
+pip install googlemaps  
+pip install folium  
+pip install polyline  
+pip install uszipcode  
+pip install gdown  
+pip install numpy  
+pip install pandas  
+pip install streamlit  
+pip install pgeocode (Temporary?)  
+pip install coverage
+python setup.py  
+
 # Project description:
 This project aims to improve on the current method of ordering foods. Currently, recommendation on the delivery apps works by ads, prior visits/orders and grouped by cuisine or price. We want to introduce a holistic approach to ordering food, inspired by our endless back and forth with friends/partners such as - “what food should we order today” , “you decide, anything works for me”. 
 
