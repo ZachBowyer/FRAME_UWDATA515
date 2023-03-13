@@ -11,7 +11,7 @@
 import sys
 import unittest
 import folium
-sys.path.insert(0, '../fgmap')
+sys.path.insert(0, '../fgmap') #Means unit test has to be run from this folder
 # (Need this because we don't want to edit everyones PYTHONPATH)
 # pylint: disable=wrong-import-position
 import fgmap

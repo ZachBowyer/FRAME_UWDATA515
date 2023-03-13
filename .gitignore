@@ -1,4 +1,6 @@
 *.csv
 *.xls
+*.xlsx
+*.coverage
 __pycache__/
 .ipynb_checkpoints
