@@ -25,4 +25,8 @@ jobs:
         pylint UnitTests/test_fgmap.py
         pylint App/app.py
         pylint setup.py
+        pylint Util/DataPreprocessing/data_preprocess.py
+        pylint Util/DataPreprocessing/downloadfile.py
+        
+
 
