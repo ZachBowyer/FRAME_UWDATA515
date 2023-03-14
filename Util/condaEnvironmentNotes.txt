@@ -15,12 +15,8 @@ There is a broken export issue which requires a manual fix
 # pip install uszipcode 
 # pip install python-Levenshtein
 # pip install streamlit
-
-
-# pip install googlemaps
-# pip install folium
-# pip install polyline
-# pip install uszipcode
+# pip install pgeocode 
+# pip install gdown
 
 #Export environemnt
 # conda env export > environment.yml
@@ -37,7 +33,7 @@ There is a broken export issue which requires a manual fix
 
 # Delete environment
 # conda deactivate
-# conda remove --name FRAME_windows --all
+# conda remove --name FRAME_WINDOWS --all
 
 # Install environment from yml file
 # conda env create --name FRAME_windows --file=environment.yml
