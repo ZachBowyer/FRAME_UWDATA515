@@ -76,7 +76,7 @@ def price_shortlist(filter_restaurants, price):
     Output:
     filtered dataframe of dishes which cost less than or equal to price.
     '''
-    prices = ['$', '$$$', '$$$', '$$$$']
+    prices = ['$', '$$', '$$$', '$$$$']
     #filter_price = filter_restaurants[filter_restaurants['price_range'] == price] # pylint: disable=singleton-comparison
     filter_price = filter_restaurants
     filter_price['result'] = filter_price['price_range'].str.contains('|'.join(prices)) # pylint: disable=singleton-comparison
@@ -137,6 +137,10 @@ def food_category_shortlist(filter_rest_category, food_category):
     filtered dataframe of dishes where the food item category matches the
     user's desired food item category.
     '''
+    if food_category == 'None':
+        return filter_rest_category
+    else:
+        pass
     filter_food = filter_rest_category[
         filter_rest_category['Category'].str.contains(
             food_category
@@ -188,14 +192,35 @@ def seating_shortlist(health_inspection_filter, seating_input):
     filtered dataframe of dishes where the restaurant has the specified range
     of seats.
     '''
-    seat_filter = health_inspection_filter[
-        health_inspection_filter['Seats'].str.contains(
-            seating_input
-            )
-        ]
+    if seating_input == 'Takeout':
+        seating_input = 'No Seating'
+    else:
+        pass
+    ['Takeout', '0 - 12','13 - 50', '51 - 150', '151-250', '> 250']
+    acceptable_seating = []
+    if seating_input == "No Seating":
+        acceptable_seating = ['No Seating']
+    elif seating_input == "0 - 12":
+        acceptable_seating = ['Takeout', '0 - 12']
+    elif seating_input =="13 - 50":
+        acceptable_seating = ['Takeout', '0 - 12','13 - 50']
+    elif seating_input =="51 - 150":
+        acceptable_seating = ['Takeout', '0 - 12','13 - 50', '51 - 150']
+    elif seating_input == "151-250":
+        acceptable_seating = ['Takeout', '0 - 12','13 - 50', '51 - 150', '151-250']
+    elif seating_input == "> 250":
+        acceptable_seating = ['Takeout', '0 - 12','13 - 50', '51 - 150', '151-250', '> 250']
+    else:
+        st.error('Invalid Health Inspection result input, try again!', icon="🚨")
+        st.stop()
+        
+    seat_filter = health_inspection_filter
+    seat_filter['result'] = seat_filter['Seats'].str.contains('|'.join(acceptable_seating))
+    seat_filter = seat_filter[seat_filter['result'] == True]
+    seat_filter.drop('result', axis = 1, inplace = True)
     return seat_filter
 def recommend_food(zip_input, max_dist_input, restaurant_category_input,
-                   diet_input, price_input,rating_input, health_inspection_input,
+                   food_category_input, price_input,rating_input, health_inspection_input,
                    seating_input):
     # pylint: disable=too-many-arguments
     '''
@@ -219,10 +244,10 @@ def recommend_food(zip_input, max_dist_input, restaurant_category_input,
     # Filtering dishes based on restaurant score
     filter_score = score_shortlist(filter_price, rating_input)
     # Cuisine based filtering
-    filter_cuisine = restaurant_category_shortlist(filter_score,
+    filter_restaurants = restaurant_category_shortlist(filter_score,
                                                    restaurant_category_input)
     # filter based on dietary preferences
-    filter_food_category = food_category_shortlist(filter_cuisine, diet_input)
+    filter_food_category = food_category_shortlist(filter_restaurants, food_category_input)
     filter_food_category = filter_food_category.sort_values(by = ['RestaurantScore'],
                                           ascending = False)
     health_inspection_filter = health_inspect_shortlist(filter_food_category,
@@ -273,7 +298,7 @@ def main():
             pass
         # Input for dietary preferences
         food_item_category = ['Other', 'Appetizers', 'Entrees', 'Beverages',
-                              'Sides', 'Salads', 'Platters', 'Desserts', 'Snacks']
+                              'Sides', 'Salads', 'Platters', 'Desserts', 'Snacks', 'None']
         food_category_input = right_food.selectbox('Food Category',
                                                    options = food_item_category)
         if food_category_input not in food_item_category:
@@ -310,14 +335,14 @@ def main():
         left_health_inspect, right_seating = st.columns(2)
         health_inspection = ['Excellent', 'Good', 'Okay', 'Unrated', 'Needs to improve']
         health_inspect_input = left_health_inspect.selectbox(
-            "Lowest Health Inspection Results you'd settle for': ",
+            "Lowest Health Inspection Results you'd settle for: ",
                                             options = health_inspection)
         if health_inspect_input not in health_inspection:
             st.error('Invalid inspection criteria, try again!', icon="🚨")
             st.stop
         else:
             pass
-        seating = ['No Seating', '0 - 12','13 - 50', '51 - 150', '151-250', '> 250']
+        seating = ['Takeout', '0 - 12','13 - 50', '51 - 150', '151-250', '> 250']
         seating_input = right_seating.selectbox("How extroverted are you feeling today?",
                                      options = seating)
         if seating_input not in seating:
