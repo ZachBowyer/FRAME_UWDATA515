@@ -36,3 +36,7 @@ gdown.download(URL4, 'data/Category_mapping.csv', quiet=False)
 # Preprocessed data (Takes too long to run manually)
 URL5 = 'https://drive.google.com/uc?id=10g9vS2VFuGYmxLBCRnxjSvXVLlrpEnKv'
 gdown.download(URL5, 'data/Food_and_Restaurant_Data.csv', quiet=False)
+
+#Data for dashboard
+URL6 = 'https://drive.google.com/uc?id=1Av8qtRWFgKEl74Y0GzV8GiMOIjKDeI5s'
+gdown.download(URL5, 'data/Datafordashboard.csv', quiet=False)

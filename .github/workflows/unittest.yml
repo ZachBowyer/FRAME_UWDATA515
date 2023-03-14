@@ -62,6 +62,7 @@ jobs:
       - name: Unit tests
         run: |
           pip install coverage
+          python setup.py
           cd UnitTests
           python test_fgmap.py
           coverage run test_fgmap.py
