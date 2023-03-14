@@ -30,9 +30,9 @@ URL3 = 'https://drive.google.com/uc?id=1EPtMo7mulWnW2sRrZoHHWFfnU54pYmCX'
 gdown.download(URL3, 'data/seagov.csv', quiet=False)
 
 # Preprocessed data (Takes too long to run manually)
-URL4 = 'https://drive.google.com/file/d/149o_vBeYkXa0oAGPUNJ3FUeWdFicO-0e/view?usp=share_link'
+URL4 = 'https://drive.google.com/uc?id=149o_vBeYkXa0oAGPUNJ3FUeWdFicO-0e'
 gdown.download(URL4, 'data/Category_mapping.csv', quiet=False)
 
 # Preprocessed data (Takes too long to run manually)
-URL5 = 'https://drive.google.com/file/d/10g9vS2VFuGYmxLBCRnxjSvXVLlrpEnKv/view?usp=share_link'
+URL5 = 'https://drive.google.com/uc?id=10g9vS2VFuGYmxLBCRnxjSvXVLlrpEnKv'
 gdown.download(URL5, 'data/Food_and_Restaurant_Data.csv', quiet=False)
