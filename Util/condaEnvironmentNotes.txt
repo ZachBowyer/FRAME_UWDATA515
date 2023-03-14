@@ -3,9 +3,9 @@ Information for manually creating/loading anaconda environment from WINDOWS
 There is a broken export issue which requires a manual fix 
 """
 #Making environment from scratch
-# conda remove --name FRAME_windows --all
-# conda create --name FRAME_windows python=3.10.8
-# conda activate FRAME_windows
+# conda remove --name FRAME_WINDOWS --all
+# conda create --name FRAME_WINDOWS python=3.10.8
+# conda activate FRAME_WINDOWS
 # pip install pandas
 # pip instll numpy
 # pip install fuzzywuzzy
