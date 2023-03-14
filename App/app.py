@@ -4,12 +4,12 @@ The app is written tailored to the dummy data we have in possession before
 developing the app for the entire city of Seattle.
 """
 # Importing Libraries
-import sys
+#import sys
 import pandas as pd # pylint: disable=import-error
 import streamlit as st # pylint: disable=import-error
 import pgeocode # pylint: disable=import-error
-sys.path.insert(0, 'fgmap')
-import fgmap # pylint: disable=import-error, wrong-import-position
+#sys.path.insert(0, 'fgmap')
+from fgmap import fgmap # pylint: disable=import-error, wrong-import-position
 # Setting Page configuration
 st.set_page_config(
     page_title="FRAME - Food Recommendation for All Methodical Eaters",
