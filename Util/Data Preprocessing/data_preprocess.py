@@ -69,15 +69,15 @@ def map_category(category):
 
 
 # Cleaning of KingCounty Inspection data
-king_data = pd.read_csv('seagov.csv')
+king_data = pd.read_csv('../../data/seagov.csv')
 king_data['Date'] = pd.to_datetime(king_data['Inspection Date']).dt.strftime('%Y/%m/%d')
 
 # Taking the latest record for every retaurant
 king_data_df = king_data.sort_values('Date').groupby(['Name','Address']).tail(1)
 
 # Reading Ubereats data
-rest = pd.read_csv('restaurants.csv')
-menu = pd.read_csv('restaurant-menus.csv')
+rest = pd.read_csv('../../data/restaurants.csv')
+menu = pd.read_csv('../../data/restaurant-menus.csv')
 
 # Filtering for restaurants only in Seattle area
 rest_sea= rest[rest['zip_code'].str.startswith('981', na=False)]
@@ -103,7 +103,6 @@ THRESHOLD=80
 LIMIT=1
 matches = []
 for row in rest_sea['full_address']:
-    print(row)
     match = process.extractOne(row, king_data_df['FA'],
                                scorer=fuzz.token_sort_ratio,
                                score_cutoff=THRESHOLD)
@@ -143,5 +142,5 @@ front_end_data['RestaurantName'] = front_end_data['RestaurantName'].apply(
 front_end_data['DishName'] = front_end_data['DishName'].apply(lambda x: re.sub(pattern_name, '', x))
 
 # save the updated dataframe to a new file
-front_end_data.to_csv('Datafordashboard.csv', index=False)
+front_end_data.to_csv('../../data/Datafordashboard.csv', index=False)
 print("DATA IS READY!!")
