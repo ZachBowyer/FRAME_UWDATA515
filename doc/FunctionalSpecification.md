@@ -52,6 +52,13 @@ restaurant-menus.csv (3375211 rows, 5 columns)
 * price: (String, float followed with ' USD', EX: '5:99 USD')  
 From this data, we have 1740 Seattle-based restaurants, that combine for 99643 menu items.  
 
+King County Inspection Data:
+https://data.kingcounty.gov/Health-Wellness/Food-Establishment-Inspection-Data/f29f-zza5
+seagov.csv (253644 rows, 4 relevant columns)
+* name: (String) - Unspecified format
+* address (String): Unspecified format
+* description (String): Unspecified format
+* grade: (int64) - 1-4, 23.7% null values  
 --  
 
 Googlemaps api in conjunction with the googlemaps python package. Documentation can be found here https://developers.google.com/maps/documentation (Pulls from database for address information and trips)
