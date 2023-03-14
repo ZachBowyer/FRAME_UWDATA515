@@ -25,3 +25,15 @@
 	
 		
 
+App Updates - 
+Website notes - 13-Mar - 
+	1) Zip code - provide comments saying its Seattle or restrict the list of zip codes
+		a. Make it a dropdown
+	2) Miles -  put in a max limit, say 25miles? Whats seattles limit
+	3) Restaurant Category - looks good!
+	4) Food category - Small change, there is no colon ":" after the name
+	5) Maximum Price - upper limit of $50, basically make it a $50+ if they hit the end of the slider
+		a. Incremental limits of $5
+	6) Minimum acceptable restaurant score: upper limit should be 4 and up. 
+		a. Incremental limits of 0.5 stars
+	7) Inspection Results:  I don’t understand what this means
