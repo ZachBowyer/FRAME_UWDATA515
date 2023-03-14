@@ -19,6 +19,7 @@ jobs:
 
     - name: Create Conda environment
       run: conda env create --name FRAME_LINUX --file=environment_linux.yml
+           conda env list
            conda activate FRAME_LINUX
 
     - name: Run unit tests
