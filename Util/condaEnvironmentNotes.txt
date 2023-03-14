@@ -18,7 +18,7 @@ There is a broken export issue which requires a manual fix
 # pip install pgeocode 
 # pip install gdown
 
-#Export environemnt
+#Export environment
 # conda env export > environment.yml
 # conda env export --from-history
 # conda env export --no-build > environment.yml

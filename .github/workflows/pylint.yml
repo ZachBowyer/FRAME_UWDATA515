@@ -21,7 +21,7 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint fgmap/fgmap.py
+        pylint App/fgmap/fgmap.py
         pylint UnitTests/test_fgmap.py
         pylint App/app.py
         pylint setup.py
