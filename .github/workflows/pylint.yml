@@ -22,9 +22,8 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint App/app.py
-        pylint App/Unittest.py
+        pylint App/test_app.py
         pylint App/fgmap/fgmap.py
         pylint UnitTests/test_fgmap.py
         pylint Util/DataPreprocessing/data_preprocess.py
         pylint setup.py
-        pylint
