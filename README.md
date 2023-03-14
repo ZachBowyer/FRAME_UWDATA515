@@ -22,8 +22,10 @@ Follow the steps below:
 5. conda info --envs (See if it exists)
 6. conda activate FRAME_WINDOWS
 7. python setup.py
-8. cd App
-9. streamlit run app.py
+8. cd Util/DataPreprocessing
+9. python data_preprocess.py
+10. cd ../../App
+11. streamlit run app.py
 
 ## UNIX
 Follow the steps below:
@@ -32,18 +34,22 @@ Follow the steps below:
 3. install anaconda https://www.anaconda.com/
 4. conda env create --name FRAME_LINUX --file=environment_linux.yml
 5. conda activate FRAME_LINUX
-6. python setup.py  
-7. cd App
-8. streamlit run app.py
+6. python setup.py
+7. cd Util/DataPreprocessing
+8. python data_preprocess.py
+9. cd ../../App
+10. streamlit run app.py
 
 ## MAC
 Follow the steps below:
 1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
 2. cd FRAME_UWDATA515
 3. pip install pandas numpy fuzzywuzzy folium googlemaps polyline uszipcode python-Levenshtein streamlit pgeocode gdown
-4. python setup.py  
-5. cd App
-6. streamlit run app.py
+4. python setup.py
+5. cd Util/DataPreprocessing
+6. python data_preprocess.py
+7. cd ../../App
+8. streamlit run app.py
 
 If conda doesn't work here are the pip installs:
 1. pip install pandas
