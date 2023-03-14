@@ -7,7 +7,8 @@ Raman SV
 Arjun Sharma  
 Adithyaa Vaasen  
 
-## Web-app link: https://frame-seattle.streamlit.app/
+## Web-app link: 
+https://frame-seattle.streamlit.app/
 
 # SETUP
 ## WINDOWS
