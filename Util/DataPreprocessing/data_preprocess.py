@@ -14,6 +14,8 @@ process it so that it is rendered efficiently on the homescreen/app site.
 Hence, this code is not part of exception handling or unittesting.
 """
 
+# (Need this because we don't want to edit everyones PYTHONPATH)
+# pylint: disable=import-error
 import re
 import warnings
 import pandas as pd
