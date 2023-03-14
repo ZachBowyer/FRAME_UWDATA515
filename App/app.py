@@ -16,9 +16,9 @@ st.set_page_config(
     page_icon="🍴", layout = 'wide', initial_sidebar_state="expanded"
 )
 # Reading the data
-df = pd.read_csv("https://raw.githubusercontent.com/Arjun-SC31/DATA-515-Demo/main/App/Food_and_Restaurant_Data.csv")
+df = pd.read_csv("../data/Food_and_Restaurant_Data.csv")
 df['zip_code'] = df['zip_code'].apply(str) # pgeocodes accepts string inputs for zip codes
-df_categories = pd.read_csv("https://raw.githubusercontent.com/Arjun-SC31/DATA-515-Demo/main/App/Category_Mapping.csv")
+df_categories = pd.read_csv("../data/Category_Mapping.csv")
 seattle_zips = ['98103', '98122', '98105', '98133', '98107', '98117', '98115',
    '98199', '98112', '98125', '98109', '98155', '98102', '98119',
    '98104', '98177', '98101', '98148', '98166', '98188', '98146',
