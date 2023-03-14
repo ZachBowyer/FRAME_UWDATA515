@@ -14,7 +14,7 @@ import re
 import warnings
 import pandas as pd
 from fuzzywuzzy import fuzz, process
-warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore")
 
 # Define a regular expression pattern to match each category
 PATTERNS = {
@@ -30,6 +30,42 @@ PATTERNS = {
     'Other': r'.*'
 }
 
+# Define the mapping data as a list of tuples
+mapping_data = [
+    ('Seating 0-12 - Risk Category III', '0 - 12'),
+    ('Seating 13-50 - Risk Category III', '13 - 50'),
+    ('Seating 51-150 - Risk Category III', '51 - 150'),
+    ('Bakery-no seating - Risk Category II', 'No Seating'),
+    ('Grocery Store-no seating - Risk Category I', 'No Seating'),
+    ('Seating > 250 - Risk Category III', '> 250'),
+    ('Seating 151-250 - Risk Category III', '151-250'),
+    ('Seating 13-50 - Risk Category II', '13 - 50'),
+    ('Caterer - Risk Category II', 'No Seating'),
+    ('Mobile Food Unit - Risk Category III', 'No Seating'),
+    ('Caterer - Risk Category III', 'No Seating'),
+    ('Seating 13-50 - Risk Category I', '13 - 50'),
+    ('Seating 0-12 - Risk Category I', '0 - 12'),
+    ('Meat/Sea Food - Risk Category III', 'No Seating'),
+    ('Bakery-no seating - Risk Category III', 'No Seating'),
+    ('Seating 0-12 - Risk Category II', '0 - 12'),
+    ('Caterer - Risk Category I', 'No Seating'),
+    ('Limited Food Services - no permanent plumbing', 'No Seating'),
+    ('Seating 51-150 - Risk Category I', '51 - 150'),
+    ('Seating 51-150 - Risk Category II', '51 - 150'),
+    ('School Lunch Program - Risk II', 'No Seating'),
+    ('Mobile Food Unit - Risk Category I', 'No Seating'),
+    ('Mobile Food Unit - Risk Category II', 'No Seating'),
+    ('Non-Profit Institution - Risk Category III', 'No Seating'),
+    ('Grocery Store-no seating - Risk Category II', 'No Seating'),
+    ('Bakery-no seating - Risk Category I', 'No Seating'),
+    ('Seating > 250 - Risk Category I', '> 250'),
+    ('Non-Profit Institution - Risk Category II', 'No Seating'),
+    ('Non-Profit Institution - Risk Category I', 'No Seating'),
+    ('Seating 151-250 - Risk Category I', '151-250'),
+    ('Seating > 250 - Risk Category II', '> 250'),
+    ('Bed and Breakfast - Risk Category I', 'No Seating'),
+    ('Seating 151-250 - Risk Category II', '151-250')
+]
 
 #def map_category(category):
 #    """
@@ -90,7 +126,30 @@ rest_sea= rest[rest['zip_code'].str.startswith('981', na=False)]
 king_data_df["FA"] = king_data_df["Address"] + ' ' + king_data_df["City"] + ' '
 king_data_df["FA"] += king_data_df["Zip Code"].astype(str)
 
-king_data_df = king_data_df[['Name','FA','Inspection Result']]
+king_data_df = king_data_df[['Name','FA','Inspection Result','Grade','Description']]
+
+# Replace blanks with "No rating"
+king_data_df['Grade'].fillna('Unrated', inplace=True)
+king_data_df['Grade'].replace('', 'Unrated', inplace=True)
+
+# Replace 1 with "Excellent"
+king_data_df['Grade'].replace(1, 'Excellent', inplace=True)
+
+# Replace 2 with "Good"
+king_data_df['Grade'].replace(2, 'Good', inplace=True)
+
+# Replace 3 with "Okay"
+king_data_df['Grade'].replace(3, 'Okay', inplace=True)
+
+# Replace 4 with "Needs to improve"
+king_data_df['Grade'].replace(4, 'Needs to improve', inplace=True)
+
+# Convert the mapping data to a dictionary
+description_to_seats = dict(mapping_data)
+
+# Create a new column called "Seats" in the other dataset
+king_data_df["Seats"] = king_data_df["Description"].map(description_to_seats)
+
 rest_sea['full_address'] = rest_sea['full_address'].str.lower().str.strip()
 king_data_df['FA'] = king_data_df['FA'].str.lower().str.strip()
 
@@ -143,7 +202,4 @@ front_end_data['DishName'] = front_end_data['DishName'].apply(lambda x: re.sub(p
 
 # save the updated dataframe to a new file
 front_end_data.to_csv('../../data/Datafordashboard.csv', index=False)
-<<<<<<< HEAD:Util/Data Preprocessing/data_preprocess.py
 print("DATA IS READY!!!")
-=======
->>>>>>> 6c7b381b95c99470429dc06b6dd6a022e52c061e:Util/DataPreprocessing/data_preprocess.py
