@@ -21,12 +21,10 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
+        pylint App/app.py
+        pylint App/Unittest.py
         pylint App/fgmap/fgmap.py
         pylint UnitTests/test_fgmap.py
-        pylint App/app.py
-        pylint setup.py
         pylint Util/DataPreprocessing/data_preprocess.py
-        pylint Util/DataPreprocessing/downloadfile.py
-        
-
-
+        pylint setup.py
+        pylint
