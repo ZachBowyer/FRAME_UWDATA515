@@ -3,7 +3,6 @@ This file is the script that renders the web app written with streamlit for FRAM
 The app is written tailored to the dummy data we have in possession before
 developing the app for the entire city of Seattle.
 """
- 
 # Importing Libraries
 import pandas as pd
 import sys
@@ -11,32 +10,19 @@ import streamlit as st
 import pgeocode #Temporary need to make it proper module import at some point
 sys.path.insert(0, 'fgmap')
 import fgmap # pylint: disable=import-error, wrong-import-position
-
 # Setting Page configuration
 st.set_page_config(
     page_title="FRAME - Food Recommendation for All Methodical Eaters",
     page_icon="🍴", layout = 'wide', initial_sidebar_state="expanded"
 )
 # Reading the data
-df = pd.read_csv("../data/Food_and_Restaurant_Data.csv")
+df = pd.read_csv("../data/Datafordashboard.csv")
 df['zip_code'] = df['zip_code'].apply(str) # pgeocodes accepts string inputs for zip codes
 df_categories = pd.read_csv("../data/Category_Mapping.csv")
-seattle_zips = ['98103', '98122', '98105', '98133', '98107', '98117', '98115',
-   '98199', '98112', '98125', '98109', '98155', '98102', '98119',
-   '98104', '98177', '98101', '98148', '98166', '98188', '98146',
-   '98106', '98134', '98198', '98108', '98118', '98136', '98168',
-   '98116', '98126', '98158', '98144', '98121']
-def zip_to_coordinates(zip_code):
-    '''
-    Description: Converts the input zipcode to latitude and longitude coordinates.
-    ----------
-    Input: zip_code (str) - The user's zip code.
-    Returns: lat, long - coordinates corresponding to the user's location
-    '''
-    country = pgeocode.Nominatim('US')
-    lat, long = (country.query_postal_code(zip_code).latitude,
-                 country.query_postal_code(zip_code).longitude)
-    return lat, long
+seattle_zips = ['98101', '98102', '98103', '98104', '98105', '98106', '98107',
+'98108', '98109', '98112', '98115', '98116', '98117', '98118', '98119', '98121',
+'98122', '98125', '98126', '98133', '98134', '98136', '98144', '98146', '98148',
+'98155', '98158', '98166', '98168', '98177', '98188', '98198', '98199']
 def zip_code_shortlist(zipcode, max_distance):
     '''
     Description: Returns a dictionary containing the zipcodes within the distance limit, and
@@ -121,7 +107,6 @@ def restaurant_category_shortlist(filter_score, restaurant_category_input):
     filtered dataframe of dishes where the restaurant category matches the
     user input.
     '''
-    
     rest_category = df_categories[
         df_categories['Updated Category'].str.contains(
             restaurant_category_input
@@ -129,8 +114,12 @@ def restaurant_category_shortlist(filter_score, restaurant_category_input):
         ]
     list_rest_category = rest_category.RestaurantCategory.values.tolist()
     #st.write(list_rest_category)
-    filter_score['result'] = filter_score['RestaurantCategory'].str.contains('|'.join(list_rest_category))
-    filter_rest_category = filter_score[filter_score['result'] == True]
+    filter_score['result'] = filter_score[
+        'RestaurantCategory'].str.contains(
+            '|'.join(list_rest_category
+                     )
+            )
+    filter_rest_category = filter_score[filter_score['result'] is True]
     filter_rest_category.drop('result', axis = 1, inplace = True)
     #st.write(filter_rest_category.shape)
     return filter_rest_category
@@ -165,18 +154,46 @@ def health_inspect_shortlist(filter_food, health_inspect_input):
     filtered dataframe of dishes where the food item category matches the
     user's health inspection requirement.
     '''
-    health_results = ['Satisfactory', 'Complete']
-    if health_inspect_input == "I'm very particular about health inspections.":
-        health_inspection_df = filter_food[
-            filter_food['Inspection Result'].isin(health_results)
-            ]
+    acceptable = []
+    if health_inspect_input == "Excellent":
+        acceptable = ['Excellent']
+    elif health_inspect_input == "Good":
+        acceptable = ['Excellent', 'Good']
+    elif health_inspect_input =='Okay':
+        acceptable = ['Excellent', 'Good', 'Okay']
+    elif health_inspect_input =='Unrated':
+        acceptable = ['Excellent', 'Good', 'Okay', 'Unrated']
+    elif health_inspect_input == 'Needs to improve':
+        acceptable = ['Excellent', 'Good', 'Okay', 'Unrated', 'Needs to improve']
     else:
-        #st.write('health_inspect_shortlist_dont_care: ', filter_food.shape)
-        return filter_food
-    #st.write('health_inspect_shortlist_care: ', health_inspection_df.shape)
+        st.error('Invalid Health Inspection result input, try again!', icon="🚨")
+        st.stop()
+    filter_food['result'] = filter_food['Grade'].str.contains('|'.join(acceptable))
+    health_inspection_df = filter_food[filter_food['result'] is True]
+    health_inspection_df.drop('result', axis = 1, inplace = True)
     return health_inspection_df
-def recommend_food(zip_input, max_dist_input, restaurant_category_input,
-                   diet_input, price_input,rating_input, health_inspection_input):
+
+def seating_shortlist(health_inspection_filter, seating_input):
+    '''
+    Description: Filtering the data based on user's seating preferences.
+    ----------
+    Input:
+    health_inspection_filter: Dishes obtained after filtering for health inspection
+    results.
+    seating_input: Number of seats option taken from user.
+    Output:
+    filtered dataframe of dishes where the restaurant has the specified range
+    of seats.
+    '''
+    seat_filter = health_inspection_filter[
+        health_inspection_filter['Seats'].str.contains(
+            seating_input
+            )
+        ]
+    return seat_filter
+def recommend_food(zip_input, max_dist_input, restaurant_category_input,# pylint: disable=too-many-arguments, too-many-locals
+                   diet_input, price_input,rating_input, health_inspection_input,
+                   seating_input):
     # pylint: disable=too-many-arguments
     '''
     Takes the user responses as input to then filter restaurant and dishes data
@@ -207,23 +224,34 @@ def recommend_food(zip_input, max_dist_input, restaurant_category_input,
                                           ascending = False)
     health_inspection_filter = health_inspect_shortlist(filter_food_category,
                                                         health_inspection_input)
-    return health_inspection_filter.head()
-def main():
+    seating_filter = seating_shortlist(health_inspection_filter, seating_input)
+    return seating_filter.head()
+def main(): # pylint: disable=too-many-branches, too-many-statements
     # pylint: disable=too-many-locals
     '''
     The web app is rendered through this function.
     User inputs taken through this function.
     '''
-    st.markdown("<h1 style='text-align: center; color: white;'>FRAME - Food Recommendations for All Methodical Eaters 🍴</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: white;'>FRAME - Food Recommendations for All Methodical Eaters 🍴</h1>", unsafe_allow_html=True) # pylint: disable=line-too-long
     #st.title("FRAME - Food Recommendations for All Methodical Eaters 🍴")
     placeholder = st.empty()
     with placeholder.form("FRAME_form"):
         st.subheader("Enter your preferences:")
         # Input for user zipcode and max distance
         left_zip, right_dist = st.columns(2)
-        zip_input = left_zip.text_input('Zip code:', '98105')
+        zip_input = left_zip.selectbox('Zip code (Seattle only):', options = seattle_zips)
+        if zip_input not in seattle_zips:
+            st.error('Invalid zipcode, please try again!', icon="🚨")
+            st.stop()
         # Input for maximum distance from user
-        max_dist_input = right_dist.number_input('Maximum distance preference (miles): ', 0.5)
+        max_dist_input = right_dist.number_input(
+            'Maximum distance preference (miles): ',
+            min_value = 0.5, max_value = 15.0, step = 0.5)
+        if isinstance(max_dist_input, float) is False and isinstance(max_dist_input, int) is False:
+            st.error('Invalid max distance input, numbers only!', icon="🚨")
+            st.stop()
+        else:
+            pass
         # Input for cuisine and diet restrictions
         left_restaurants, right_food = st.columns(2)
         restaurant_category = ['Other','African', 'American', 'Asian', 'Bakery', 'Breakfast',
@@ -233,27 +261,72 @@ def main():
                                  'Seafood', 'Thai', 'Vegan', 'Vegetarian', 'Vietnamese']
         restaurant_category_input = left_restaurants.selectbox('Restaurant Category:',
                                                                options = restaurant_category)
+        if restaurant_category_input not in restaurant_category:
+            st.error('Invalid restaurant category, try again!', icon="🚨")
+            st.stop()
+        else:
+            pass
         # Input for dietary preferences
         food_item_category = ['Other', 'Appetizers', 'Entrees', 'Beverages',
                               'Sides', 'Salads', 'Platters', 'Desserts', 'Snacks']
         food_category_input = right_food.selectbox('Food Category',
                                                    options = food_item_category)
+        if food_category_input not in food_item_category:
+            st.error('Invalid food category, try again!', icon="🚨")
+            st.stop()
+        else:
+            pass
         # Input for price range and rating preference
         left_price, right_rating = st.columns(2)
-        price_input = left_price.slider('Maximum Price ($): ', 0.0, 250.0, 1.0)
+        price_input = left_price.slider('Maximum Price ($): ',
+                                        min_value = 5, max_value = 250, step = 5)
+        if isinstance(price_input, float) is False and isinstance(price_input, int) is False:
+            st.error('Invalid price input, try again!', icon="🚨")
+            st.stop()
+        else:
+            pass
         # Input for restaurant rating preferences
-        rating_input = right_rating.slider('Minimum acceptable restaurant score: ', 0.0, 5.0, 1.0)
+        rating_input = right_rating.selectbox(
+            'Enter restaurant rating preferences (on a scale of 5): ',
+            options=['★ & Up', '★★ & Up', '★★★ & Up', '★★★★ & Up', 'None'])
+        if rating_input == '★ & Up':
+            rating_input = 1
+        elif rating_input == '★★ & Up':
+            rating_input = 2
+        elif rating_input == '★★★ & Up':
+            rating_input = 3
+        elif rating_input == '★★★★ & Up':
+            rating_input = 4
+        else:
+            rating_input = 0
+        if isinstance(rating_input, float) is False and isinstance(rating_input, int) is False:
+            st.error('Invalid rating requirement, try again!', icon="🚨")
+            st.stop()
+        else:
+            pass
         # Input for restaurant health inspection
-        health_inspect_input = st.selectbox('Inspection Results: ',
-                                            options = [
-                                                "Doesn't matter, food is food!",
-                                                "I'm very particular about health inspections."
-                                                                             ])
+        left_health_inspect, right_seating = st.columns(2)
+        health_inspection = ['Excellent', 'Good', 'Okay', 'Unrated', 'Needs to improve']
+        health_inspect_input = left_health_inspect.selectbox(
+            "Lowest Health Inspection Results you'd settle for': ",
+                                            options = health_inspection)
+        if health_inspect_input not in health_inspection:
+            st.error('Invalid inspection criteria, try again!', icon="🚨")
+            st.stop # pylint: disable=pointless-statement
+        else:
+            pass
+        seating = ['No Seating', '0 - 12','13 - 50', '51 - 150', '151-250', '> 250']
+        seating_input = right_seating.selectbox("How social are you feeling? (Choose restaurant seating)",
+                                     options = seating)
+        if seating_input not in seating:
+            st.error('Invalid seating criteria, try again!', icon="🚨")
+            st.stop # pylint: disable=pointless-statement
         submit = st.form_submit_button("Get FRAMEd!")
     if submit:
         final_filter = recommend_food(zip_input, max_dist_input,
                                       restaurant_category_input, food_category_input,
-                                      price_input, rating_input, health_inspect_input)
+                                      price_input, rating_input, health_inspect_input,
+                                      seating_input)
         if len(final_filter.index) == 0:
             st.error(
                 "Sorry, we couldn't find any recommendations for the given criteria!",
@@ -266,7 +339,6 @@ def main():
         st.header('Below are your food recommendations:')
         #st.write(final_filter.shape)
         restaurants = []
-        
         g_map, food_recommendations = st.columns([5,4], gap="large")
         with g_map:
             for i in range (1,len(final_filter.index)+1):
@@ -282,7 +354,7 @@ def main():
             display_map(restaurants, int(zip_input))
         with food_recommendations:
             for i in range (1,len(final_filter.index)+1):
-                st.subheader(f'#{i}: {final_filter.iloc[i-1,11]}')
+                st.subheader(f'#{i}: {final_filter.iloc[i-1,-4]}')
                 st.text(f'Restaurant: {final_filter.iloc[i-1,1]}')
                 st.text(f'Price: ${final_filter.iloc[i-1,-2]}')
                 st.text(f'Description: {final_filter.iloc[i-1,-3]}')
@@ -303,14 +375,13 @@ def main():
             pass
         with col5:
             pass
-        
 def display_map(restaurants, zip_input):
     '''
     Displays the restaurants suggested as well as the user's input location
     on a map embedded into the web page.
     '''
-    newmap = fgmap.Fgmap()
-    newmap.createmap(origin=str(zip_input), zoom_start=13)
+    newmap = fgmap.Fgmap() # pylint: disable=not-callable
+    newmap.createmap(origin=str(zip_input))
     #Draw trip line and add point at each restaurant
     index = 0
     for restaurant in restaurants:
@@ -320,7 +391,6 @@ def display_map(restaurants, zip_input):
         newmap.addtrippolyline(address, color=newmap.colors[index])
         newmap.addmarker(address, popup=name, icon="star", color=newmap.colors[index])
         index += 1
-    newmap.addmarker(str(zip_input), popup="You are approximately here", icon="user", color="green")
     newmap.showzipcode(zip_input)
     htmlstring = newmap.returnhtml()
     st.components.v1.html(htmlstring, width=700, height=1000, scrolling=True)
