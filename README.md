@@ -10,6 +10,8 @@ Adithyaa Vaasen
 ## Web-app link: 
 https://frameuw.streamlit.app/
 
+Demo link - https://youtu.be/tjuMekGD8eQ
+
 # SETUP
 ## WINDOWS
 Follow the steps below:
@@ -79,7 +81,7 @@ This project is of the predefined class type: 'Tool'. It is a tool as it helps u
 7. What are the geographical restrictions for scaling up this tool? Are there different standards or datasets for varying locations?
 
 # Goal for the project output (What is going to be produced?)  
-Top 5 (maybe 10) dishes that align with the user's inputs based on preferences and filters. Further details about the dish and restaurant will be provided to the users upon selecting a specific recommendation.   
+Top 5 dishes that align with the user's inputs based on preferences and filters. Further details about the dish and restaurant will be provided to the users upon selecting a specific recommendation.   
 
 # Proposal slide: 
 ![alt text](images/ProposalSlide.png)
