@@ -31,7 +31,7 @@ gdown.download(URL3, 'data/seagov.csv', quiet=False)
 
 # Preprocessed data (Takes too long to run manually)
 URL4 = 'https://drive.google.com/uc?id=149o_vBeYkXa0oAGPUNJ3FUeWdFicO-0e'
-gdown.download(URL4, 'data/Category_mapping.csv', quiet=False)
+gdown.download(URL4, 'data/Category_Mapping.csv', quiet=False)
 
 # Preprocessed data (Takes too long to run manually)
 URL5 = 'https://drive.google.com/uc?id=10g9vS2VFuGYmxLBCRnxjSvXVLlrpEnKv'
