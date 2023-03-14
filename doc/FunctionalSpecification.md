@@ -52,7 +52,7 @@ restaurant-menus.csv (3375211 rows, 5 columns)
 * price: (String, float followed with ' USD', EX: '5:99 USD')  
 From this data, we have 1740 Seattle-based restaurants, that combine for 99643 menu items.  
 
-King County Inspection Data:
+King County Inspection Data:  https://data.kingcounty.gov/Health-Wellness/Food-Establishment-Inspection-Data/f29f-zza5
 seagov.csv (253644 rows, 4 relevant columns)
 * name: (String) - Unspecified format
 * address (String): Unspecified format
