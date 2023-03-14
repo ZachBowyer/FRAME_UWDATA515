@@ -39,7 +39,7 @@ streamlit run app.py
 
 If conda doesn't work here are the pip installs:
 pip install pandas
-pip instll numpy
+pip install numpy
 pip install fuzzywuzzy
 pip install folium 
 pip install googlemaps 

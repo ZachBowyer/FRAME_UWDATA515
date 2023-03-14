@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: |
           pip install pandas
-          pip instll numpy
+          pip install numpy
           pip install fuzzywuzzy
           pip install folium 
           pip install googlemaps 
