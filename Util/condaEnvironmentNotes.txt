@@ -20,8 +20,6 @@ There is a broken export issue which requires a manual fix
 
 #Export environment
 # conda env export > environment.yml
-# conda env export --from-history
-# conda env export --no-build > environment.yml
 
 #Broken export fix:
 # https://github.com/conda/conda/issues/9624
@@ -41,15 +39,22 @@ There is a broken export issue which requires a manual fix
 # conda activate FRAME_windows
 
 """
-LINUX (WIP)
+LINUX (WSL) 
 """
 #Making environment from scratch
-# conda remove --name FRAME_linux --all
-# conda create --name FRAME_linux python=3.9.0
-# pip install googlemaps
-# pip install folium
+# conda remove --name FRAME_LINUX --all
+# conda create --name FRAME_LINUX python=3.10.8
+# pip install pandas
+# pip instll numpy
+# pip install fuzzywuzzy
+# pip install folium 
+# pip install googlemaps 
 # pip install polyline
-# pip install uszipcode
+# pip install uszipcode 
+# pip install python-Levenshtein
+# pip install streamlit
+# pip install pgeocode 
+# pip install gdown
 
 #Export environment
 # conda env export > environment_linux.yml

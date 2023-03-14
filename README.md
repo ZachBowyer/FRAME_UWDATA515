@@ -20,19 +20,25 @@ cd App
 streamlit run app.py
 
 ## UNIX
-pip install googlemaps folium polyline uszipcode gdown numpy pandas streamlit geocode
-pip install googlemaps  
-pip install folium  
-pip install polyline  
-pip install uszipcode  
-pip install gdown  
-pip install numpy  
-pip install pandas  
-pip install streamlit  
-pip install pgeocode (Temporary?)  
-pip install coverage
+git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
+cd FRAME_UWDATA515
+install anaconda https://www.anaconda.com/
+conda create --name FRAME_LINUX python=3.10.8
+conda activate FRAME_LINUX
+pip install pandas
+pip instll numpy
+pip install fuzzywuzzy
+pip install folium 
+pip install googlemaps 
+pip install polyline
+pip install uszipcode 
 pip install python-Levenshtein
+pip install streamlit
+pip install pgeocode 
+pip install gdown
 python setup.py  
+cd App
+streamlit run app.py
 
 # Project description:
 This project aims to improve on the current method of ordering foods. Currently, recommendation on the delivery apps works by ads, prior visits/orders and grouped by cuisine or price. We want to introduce a holistic approach to ordering food, inspired by our endless back and forth with friends/partners such as - “what food should we order today” , “you decide, anything works for me”. 
