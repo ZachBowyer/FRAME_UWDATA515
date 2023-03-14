@@ -1,26 +1,24 @@
 """
 This file is the script that renders the web app written with streamlit for FRAME.
-The app is written tailored to the data that we use after performing necessary
-changes to the data.
+The app is written tailored to the dummy data we have in possession before
+developing the app for the entire city of Seattle.
 """
+ 
 # Importing Libraries
 import pandas as pd
 import streamlit as st
-import pgeocode
-import sys
-sys.path.insert(0, '../fgmap') #Temporary need to make it proper module import at some point
-import fgmap # pylint: disable=import-error, wrong-import-position
+import pgeocode #Temporary need to make it proper module import at some point
+from fgmap import fgmap # pylint: disable=import-error, wrong-import-position
 
 # Setting Page configuration
 st.set_page_config(
     page_title="FRAME - Food Recommendation for All Methodical Eaters",
     page_icon="🍴", layout = 'wide', initial_sidebar_state="expanded"
 )
-
 # Reading the data
-df = pd.read_csv("Food_and_Restaurant_Data.csv")
+df = pd.read_csv("../data/Food_and_Restaurant_Data.csv")
 df['zip_code'] = df['zip_code'].apply(str) # pgeocodes accepts string inputs for zip codes
-
+df_categories = pd.read_csv("../data/Category_Mapping.csv")
 seattle_zips = ['98103', '98122', '98105', '98133', '98107', '98117', '98115',
    '98199', '98112', '98125', '98109', '98155', '98102', '98119',
    '98104', '98177', '98101', '98148', '98166', '98188', '98146',
@@ -76,6 +74,7 @@ def restaurants_shortlist(acceptable_zips):
     List of restaurants with acceptable zip codes.
     '''
     filter_restaurants = df[df['zip_code'].isin(acceptable_zips.keys())]
+    #st.write('restaurant_shortlist: ', filter_restaurants.shape)
     return filter_restaurants
 def price_shortlist(filter_restaurants, price):
     '''
@@ -90,6 +89,7 @@ def price_shortlist(filter_restaurants, price):
     filtered dataframe of dishes which cost less than or equal to price.
     '''
     filter_price = filter_restaurants[filter_restaurants['price'] <= price]
+    #st.write('price_shortlist: ', filter_price.shape)
     return filter_price
 def score_shortlist(filter_price, minimum_rating):
     '''
@@ -105,6 +105,7 @@ def score_shortlist(filter_price, minimum_rating):
     than the specified minimum.
     '''
     filter_score = filter_price[filter_price['RestaurantScore'] >= minimum_rating]
+    #st.write('score_shortlist: ', filter_score.shape)
     return filter_score
 def restaurant_category_shortlist(filter_score, restaurant_category_input):
     '''
@@ -118,11 +119,18 @@ def restaurant_category_shortlist(filter_score, restaurant_category_input):
     filtered dataframe of dishes where the restaurant category matches the
     user input.
     '''
-    filter_rest_category = filter_score[
-        filter_score['RestaurantCategory'].str.contains(
-            restaurant_category_input, case = False
+    
+    rest_category = df_categories[
+        df_categories['Updated Category'].str.contains(
+            restaurant_category_input
             )
         ]
+    list_rest_category = rest_category.RestaurantCategory.values.tolist()
+    #st.write(list_rest_category)
+    filter_score['result'] = filter_score['RestaurantCategory'].str.contains('|'.join(list_rest_category))
+    filter_rest_category = filter_score[filter_score['result'] == True]
+    filter_rest_category.drop('result', axis = 1, inplace = True)
+    #st.write(filter_rest_category.shape)
     return filter_rest_category
 def food_category_shortlist(filter_rest_category, food_category):
     '''
@@ -138,9 +146,10 @@ def food_category_shortlist(filter_rest_category, food_category):
     '''
     filter_food = filter_rest_category[
         filter_rest_category['Category'].str.contains(
-            food_category, case = False
+            food_category
             )
         ]
+    #st.write('food_category_shortlist: ', filter_food.shape)
     return filter_food
 
 def health_inspect_shortlist(filter_food, health_inspect_input):
@@ -160,7 +169,9 @@ def health_inspect_shortlist(filter_food, health_inspect_input):
             filter_food['Inspection Result'].isin(health_results)
             ]
     else:
+        #st.write('health_inspect_shortlist_dont_care: ', filter_food.shape)
         return filter_food
+    #st.write('health_inspect_shortlist_care: ', health_inspection_df.shape)
     return health_inspection_df
 def recommend_food(zip_input, max_dist_input, restaurant_category_input,
                    diet_input, price_input,rating_input, health_inspection_input):
@@ -201,14 +212,16 @@ def main():
     The web app is rendered through this function.
     User inputs taken through this function.
     '''
-    st.title("FRAME - Food Recommendations for All Methodical Eaters 🍴")
-    with st.form("FRAME_form"):
-        st.subheader("Enter your details below:")
+    st.markdown("<h1 style='text-align: center; color: white;'>FRAME - Food Recommendations for All Methodical Eaters 🍴</h1>", unsafe_allow_html=True)
+    #st.title("FRAME - Food Recommendations for All Methodical Eaters 🍴")
+    placeholder = st.empty()
+    with placeholder.form("FRAME_form"):
+        st.subheader("Enter your preferences:")
         # Input for user zipcode and max distance
         left_zip, right_dist = st.columns(2)
         zip_input = left_zip.text_input('Zip code:', '98105')
         # Input for maximum distance from user
-        max_dist_input = right_dist.number_input('Maximum distance preference (miles): ')
+        max_dist_input = right_dist.number_input('Maximum distance preference (miles): ', 0.5)
         # Input for cuisine and diet restrictions
         left_restaurants, right_food = st.columns(2)
         restaurant_category = ['Other','African', 'American', 'Asian', 'Bakery', 'Breakfast',
@@ -225,7 +238,7 @@ def main():
                                                    options = food_item_category)
         # Input for price range and rating preference
         left_price, right_rating = st.columns(2)
-        price_input = left_price.slider('Maximum Price ($): ', 0.0, 50.0, 1.0)
+        price_input = left_price.slider('Maximum Price ($): ', 0.0, 250.0, 1.0)
         # Input for restaurant rating preferences
         rating_input = right_rating.slider('Minimum acceptable restaurant score: ', 0.0, 5.0, 1.0)
         # Input for restaurant health inspection
@@ -236,7 +249,6 @@ def main():
                                                                              ])
         submit = st.form_submit_button("Get FRAMEd!")
     if submit:
-
         final_filter = recommend_food(zip_input, max_dist_input,
                                       restaurant_category_input, food_category_input,
                                       price_input, rating_input, health_inspect_input)
@@ -247,32 +259,49 @@ def main():
             st.stop()
         else:
             pass
+        placeholder.empty()
         st.balloons()
         st.header('Below are your food recommendations:')
         #st.write(final_filter.shape)
         restaurants = []
-        food_recommendations, g_map = st.columns([4,5], gap="large")
-        with food_recommendations:
+        
+        g_map, food_recommendations = st.columns([5,4], gap="large")
+        with g_map:
             for i in range (1,len(final_filter.index)+1):
-                st.subheader(f'*#{i}: {final_filter.iloc[i-1,11]}*')
-                st.text(f'Restaurant Name: {final_filter.iloc[i-1,1]}')
-                st.text(f'Price: ${final_filter.iloc[i-1,-2]}')
-                st.text(f'Description: {final_filter.iloc[i-1,-3]}')
-                st.text(f'Restaurant Address: {final_filter.iloc[i-1,6]}')
                 innerlist = []
                 innerlist.append(final_filter.iloc[i-1,-3])
                 innerlist.append(final_filter.iloc[i-1,1])
                 innerlist.append(final_filter.iloc[i-1,6])
                 restaurants.append(innerlist)
-                #st.text(" ")
-            #final_filter
-        with g_map:
             st.markdown(
-                "<h3 style='text-align: right;'>View Map for more insight</h3>",
+                "<h3 style='text-align: left;'>View Map for more insight</h3>",
                 unsafe_allow_html=True
                 )
             display_map(restaurants, int(zip_input))
+        with food_recommendations:
+            for i in range (1,len(final_filter.index)+1):
+                st.subheader(f'#{i}: {final_filter.iloc[i-1,11]}')
+                st.text(f'Restaurant: {final_filter.iloc[i-1,1]}')
+                st.text(f'Price: ${final_filter.iloc[i-1,-2]}')
+                st.text(f'Description: {final_filter.iloc[i-1,-3]}')
+                st.text(f'Restaurant Address: {final_filter.iloc[i-1,6]}')
+                #st.text(" ")
+            #final_filter
         st.success('Thank you! We hope you enjoyed using FRAME!')
+        col1, col2, col3, col4, col5 = st.columns(5)
+        with col1:
+            pass
+        with col2:
+            pass
+        with col3:
+            try_again = st.button("Get FRAMEd (Again)")
+            if try_again:
+                main()
+        with col4:
+            pass
+        with col5:
+            pass
+        
 def display_map(restaurants, zip_input):
     '''
     Displays the restaurants suggested as well as the user's input location
@@ -291,7 +320,7 @@ def display_map(restaurants, zip_input):
         index += 1
     newmap.showzipcode(zip_input)
     htmlstring = newmap.returnhtml()
-    st.components.v1.html(htmlstring, width=700, height=700, scrolling=True)
+    st.components.v1.html(htmlstring, width=700, height=1000, scrolling=True)
     #How to get address distances
     #distances = []
     #for address in restaurants:
