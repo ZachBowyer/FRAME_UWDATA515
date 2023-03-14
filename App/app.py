@@ -298,7 +298,7 @@ def main():
         # Input for dietary preferences
         food_item_category = ['Other', 'Appetizers', 'Entrees', 'Beverages',
                               'Sides', 'Salads', 'Platters', 'Desserts', 'Snacks', 'None']
-        food_category_input = right_food.selectbox('Food Category',
+        food_category_input = right_food.selectbox('Food Category:',
                                                    options = food_item_category)
         if food_category_input not in food_item_category:
             st.error('Invalid food category, try again!', icon="🚨")
