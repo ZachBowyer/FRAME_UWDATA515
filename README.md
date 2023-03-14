@@ -9,46 +9,49 @@ Adithyaa Vaasen
 
 # SETUP
 ## WINDOWS
-git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
-cd FRAME_UWDATA515
-install anaconda https://www.anaconda.com/
-conda env create --name FRAME_WINDOWS --file=environment_windows.yml
-conda info --envs (See if it exists)
-conda activate FRAME_WINDOWS
-python setup.py
-cd App
-streamlit run app.py
+Follow the steps below:
+1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
+2. cd FRAME_UWDATA515
+3. install anaconda https://www.anaconda.com/
+4. conda env create --name FRAME_WINDOWS --file=environment_windows.yml
+5. conda info --envs (See if it exists)
+6. conda activate FRAME_WINDOWS
+7. python setup.py
+8. cd App
+9. streamlit run app.py
 
 ## UNIX
-git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
-cd FRAME_UWDATA515
-install anaconda https://www.anaconda.com/
-conda env create --name FRAME_LINUX --file=environment_linux.yml
-conda activate FRAME_LINUX
-python setup.py  
-cd App
-streamlit run app.py
+Follow the steps below:
+1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
+2. cd FRAME_UWDATA515
+3. install anaconda https://www.anaconda.com/
+4. conda env create --name FRAME_LINUX --file=environment_linux.yml
+5. conda activate FRAME_LINUX
+6. python setup.py  
+7. cd App
+8. streamlit run app.py
 
 ## MAC
-git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
-cd FRAME_UWDATA515
-pip install pandas numpy fuzzywuzzy folium googlemaps polyline uszipcode python-Levenshtein streamlit pgeocode gdown
-python setup.py  
-cd App
-streamlit run app.py
+Follow the steps below:
+1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
+2. cd FRAME_UWDATA515
+3. pip install pandas numpy fuzzywuzzy folium googlemaps polyline uszipcode python-Levenshtein streamlit pgeocode gdown
+4. python setup.py  
+5. cd App
+6. streamlit run app.py
 
 If conda doesn't work here are the pip installs:
-pip install pandas
-pip install numpy
-pip install fuzzywuzzy
-pip install folium 
-pip install googlemaps 
-pip install polyline
-pip install uszipcode 
-pip install python-Levenshtein
-pip install streamlit
-pip install pgeocode 
-pip install gdown
+1. pip install pandas
+2. pip install numpy
+3. pip install fuzzywuzzy
+4. pip install folium 
+5. pip install googlemaps 
+6. pip install polyline
+7. pip install uszipcode 
+8. pip install python-Levenshtein
+9. pip install streamlit
+10. pip install pgeocode 
+11. pip install gdown
 
 # Project description:
 This project aims to improve on the current method of ordering foods. Currently, recommendation on the delivery apps works by ads, prior visits/orders and grouped by cuisine or price. We want to introduce a holistic approach to ordering food, inspired by our endless back and forth with friends/partners such as - “what food should we order today” , “you decide, anything works for me”. 
