@@ -24,9 +24,9 @@
 	5) Someone pick this up - Organize readme and folders in a format similar to the one Melissa linked to as examples
 	
 		
-
+Website notes - 13-Mar -
 App Updates - 
-Website notes - 13-Mar - 
+ 
 	1) Zip code - provide comments saying its Seattle or restrict the list of zip codes
 		a. Make it a dropdown
 	2) Miles -  put in a max limit, say 25miles? Whats seattles limit
