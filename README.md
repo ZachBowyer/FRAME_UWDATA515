@@ -9,33 +9,33 @@ Adithyaa Vaasen
 
 # SETUP
 ## WINDOWS
-git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
-cd FRAME_UWDATA515
-install anaconda https://www.anaconda.com/
-conda env create --name FRAME_WINDOWS --file=environment_windows.yml
-conda info --envs (See if it exists)
-conda activate FRAME_WINDOWS
-python setup.py
-cd App
-streamlit run app.py
+1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
+2. cd FRAME_UWDATA515
+3. install anaconda https://www.anaconda.com/
+4. conda env create --name FRAME_WINDOWS --file=environment_windows.yml
+5. conda info --envs (See if it exists)
+6. conda activate FRAME_WINDOWS
+7. python setup.py
+8. cd App
+9. streamlit run app.py
 
 ## UNIX
-git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
-cd FRAME_UWDATA515
-install anaconda https://www.anaconda.com/
-conda env create --name FRAME_LINUX --file=environment_linux.yml
-conda activate FRAME_LINUX
-python setup.py  
-cd App
-streamlit run app.py
+1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
+2. cd FRAME_UWDATA515
+3. install anaconda https://www.anaconda.com/
+4. conda env create --name FRAME_LINUX --file=environment_linux.yml
+5. conda activate FRAME_LINUX
+6. python setup.py  
+7. cd App
+8. streamlit run app.py
 
 ## MAC
-git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
-cd FRAME_UWDATA515
-pip install pandas numpy fuzzywuzzy folium googlemaps polyline uszipcode python-Levenshtein streamlit pgeocode gdown
-python setup.py  
-cd App
-streamlit run app.py
+1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
+2. cd FRAME_UWDATA515
+3. pip install pandas numpy fuzzywuzzy folium googlemaps polyline uszipcode python-Levenshtein streamlit pgeocode gdown
+4. python setup.py  
+5. cd App
+6. streamlit run app.py
 
 If conda doesn't work here are the pip installs:
 pip install pandas
