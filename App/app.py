@@ -308,7 +308,7 @@ def main():
             pass
         # Input for price range and rating preference
         left_price, right_rating = st.columns(2)
-        price_input = left_price.selectbox('Maximum Price ($): ', options = ['$', '$$$', '$$$', '$$$$'])
+        price_input = left_price.selectbox('Maximum Price ($): ', options = ['$', '$$', '$$$', '$$$$'])
         if isinstance(price_input, str) is False:
            st.error('Invalid price input, try again!', icon="🚨")
            st.stop()
