@@ -9,6 +9,7 @@ Adithyaa Vaasen
 
 # SETUP
 ## WINDOWS
+Follow the steps below:
 1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
 2. cd FRAME_UWDATA515
 3. install anaconda https://www.anaconda.com/
@@ -20,6 +21,7 @@ Adithyaa Vaasen
 9. streamlit run app.py
 
 ## UNIX
+Follow the steps below:
 1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
 2. cd FRAME_UWDATA515
 3. install anaconda https://www.anaconda.com/
@@ -30,6 +32,7 @@ Adithyaa Vaasen
 8. streamlit run app.py
 
 ## MAC
+Follow the steps below:
 1. git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
 2. cd FRAME_UWDATA515
 3. pip install pandas numpy fuzzywuzzy folium googlemaps polyline uszipcode python-Levenshtein streamlit pgeocode gdown
@@ -38,17 +41,17 @@ Adithyaa Vaasen
 6. streamlit run app.py
 
 If conda doesn't work here are the pip installs:
-pip install pandas
-pip install numpy
-pip install fuzzywuzzy
-pip install folium 
-pip install googlemaps 
-pip install polyline
-pip install uszipcode 
-pip install python-Levenshtein
-pip install streamlit
-pip install pgeocode 
-pip install gdown
+1. pip install pandas
+2. pip install numpy
+3. pip install fuzzywuzzy
+4. pip install folium 
+5. pip install googlemaps 
+6. pip install polyline
+7. pip install uszipcode 
+8. pip install python-Levenshtein
+9. pip install streamlit
+10. pip install pgeocode 
+11. pip install gdown
 
 # Project description:
 This project aims to improve on the current method of ordering foods. Currently, recommendation on the delivery apps works by ads, prior visits/orders and grouped by cuisine or price. We want to introduce a holistic approach to ordering food, inspired by our endless back and forth with friends/partners such as - “what food should we order today” , “you decide, anything works for me”. 
