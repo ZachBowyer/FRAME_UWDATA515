@@ -14,6 +14,8 @@ conda env create --name FRAME_windows --file=environment_windows.yml
 conda info --envs (See if it exists)
 conda activate FRAME
 python setup.py
+cd App
+streamlit run app.py
 
 ## UNIX
 pip install googlemaps folium polyline uszipcode gdown numpy pandas streamlit geocode
@@ -27,6 +29,7 @@ pip install pandas
 pip install streamlit  
 pip install pgeocode (Temporary?)  
 pip install coverage
+pip install python-Levenshtein
 python setup.py  
 
 # Project description:
