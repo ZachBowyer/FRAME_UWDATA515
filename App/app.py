@@ -24,15 +24,6 @@ seattle_zips = ['98101', '98102', '98103', '98104', '98105', '98106', '98107',
 '98122', '98125', '98126', '98133', '98134', '98136', '98144', '98146', '98148',
 '98155', '98158', '98166', '98168', '98177', '98188', '98198', '98199']
 
-new = df["price"].str.split(" ", n = 1, expand = True)
-df['price']= new[0]
-pd.to_numeric(df['price'])
-df['currency']= new[1]
- 
-df.drop('currency',axis = 1, inplace = True)
-
-df['price'] = pd.to_numeric(df['price'])
-
 def zip_code_shortlist(zipcode, max_distance):
     '''
     Description: Returns a dictionary containing the zipcodes within the distance limit, and
@@ -122,7 +113,7 @@ def price_shortlist(filter_restaurants, price):
     if price < 0:
         raise ValueError("price must be non-negative.")
 
-    filter_price = filter_restaurants[filter_restaurants['price'] <= price]
+    filter_price = filter_restaurants[filter_restaurants['price'] <= price] 
     #st.write('price_shortlist: ', filter_price.shape)
     return filter_price
 
