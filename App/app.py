@@ -478,7 +478,8 @@ def display_map(restaurants, zip_input):
     on a map embedded into the web page.
     '''
     newmap = fgmap.Fgmap() # pylint: disable=no-member
-    newmap.createmap(origin=str(zip_input))
+    #newmap.createmap(origin=str(zip_input))
+    newmap.createmap(origin=str(zip_input), zoom_start=13)
     #Draw trip line and add point at each restaurant
     index = 0
     for restaurant in restaurants:
@@ -488,7 +489,8 @@ def display_map(restaurants, zip_input):
         newmap.addtrippolyline(address, color=newmap.colors[index])
         newmap.addmarker(address, popup=name, icon="star", color=newmap.colors[index])
         index += 1
-    newmap.showzipcode(zip_input)
+    #newmap.showzipcode(zip_input)
+    newmap.addmarker(str(zip_input), popup="You are approximately here", icon="user", color="green")
     htmlstring = newmap.returnhtml()
     st.components.v1.html(htmlstring, width=700, height=1000, scrolling=True)
     #How to get address distances

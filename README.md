@@ -8,7 +8,7 @@ Arjun Sharma
 Adithyaa Vaasen  
 
 ## Web-app link: 
-https://frame-seattle.streamlit.app/
+https://frameuw.streamlit.app/
 
 # SETUP
 ## WINDOWS
