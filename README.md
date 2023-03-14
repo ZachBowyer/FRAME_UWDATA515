@@ -9,15 +9,15 @@ Adithyaa Vaasen
 
 # SETUP
 ## WINDOWS
-git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git
-cd FRAME_UWDATA515
-install anaconda https://www.anaconda.com/
-conda env create --name FRAME_WINDOWS --file=environment_windows.yml
-conda info --envs (See if it exists)
-conda activate FRAME_WINDOWS
-python setup.py
-cd App
-streamlit run app.py
+git clone https://github.com/ZachBowyer/FRAME_UWDATA515.git  
+cd FRAME_UWDATA515  
+install anaconda https://www.anaconda.com/  
+conda env create --name FRAME_WINDOWS --file=environment_windows.yml  
+conda info --envs (See if it exists)  
+conda activate FRAME_WINDOWS  
+python setup.py  
+cd App  
+streamlit run app.py  
 
 ## UNIX
 pip install googlemaps folium polyline uszipcode gdown numpy pandas streamlit geocode
