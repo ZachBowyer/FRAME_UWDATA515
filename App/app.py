@@ -4,10 +4,10 @@ The app is written tailored to the dummy data we have in possession before
 developing the app for the entire city of Seattle.
 """
 # Importing Libraries
-import pandas as pd
 import sys
-import streamlit as st
-import pgeocode #Temporary need to make it proper module import at some point
+import pandas as pd # pylint: disable=import-error
+import streamlit as st # pylint: disable=import-error
+import pgeocode # pylint: disable=import-error
 sys.path.insert(0, 'fgmap')
 import fgmap # pylint: disable=import-error, wrong-import-position
 # Setting Page configuration
@@ -316,7 +316,8 @@ def main(): # pylint: disable=too-many-branches, too-many-statements
         else:
             pass
         seating = ['No Seating', '0 - 12','13 - 50', '51 - 150', '151-250', '> 250']
-        seating_input = right_seating.selectbox("How social are you feeling? (Choose restaurant seating)",
+        seating_input = right_seating.selectbox(
+            "How social are you feeling? (Choose restaurant seating)",
                                      options = seating)
         if seating_input not in seating:
             st.error('Invalid seating criteria, try again!', icon="🚨")
@@ -380,7 +381,7 @@ def display_map(restaurants, zip_input):
     Displays the restaurants suggested as well as the user's input location
     on a map embedded into the web page.
     '''
-    newmap = fgmap.Fgmap() # pylint: disable=not-callable
+    newmap = fgmap.Fgmap() # pylint: disable=not-callable, no-member
     newmap.createmap(origin=str(zip_input))
     #Draw trip line and add point at each restaurant
     index = 0
