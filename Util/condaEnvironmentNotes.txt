@@ -44,6 +44,7 @@ LINUX (WSL)
 #Making environment from scratch
 # conda remove --name FRAME_LINUX --all
 # conda create --name FRAME_LINUX python=3.10.8
+# conda activate FRAME_LINUX
 # pip install pandas
 # pip instll numpy
 # pip install fuzzywuzzy
@@ -82,7 +83,6 @@ vi METADATA
 Change Requires-Dist: sqlalchemy (>=1.4.1<2.0.0) to Requires-Dist: sqlalchemy (>=1.4.1,<2.0.0)
 conda env export > environment_linux.yml
 
-# PIP ISNT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 conda env create --name FRAME_LINUX --file=environment_linux.yml
 
 #/mnt/c/Users/Zach/Desktop/UW_Classes/2023Winter/Data515/FRAME_UWDATA515
