@@ -6,9 +6,11 @@ developing the app for the entire city of Seattle.
  
 # Importing Libraries
 import pandas as pd
+import sys
 import streamlit as st
 import pgeocode #Temporary need to make it proper module import at some point
-from fgmap import fgmap # pylint: disable=import-error, wrong-import-position
+sys.path.insert(0, 'fgmap')
+import fgmap # pylint: disable=import-error, wrong-import-position
 
 # Setting Page configuration
 st.set_page_config(
@@ -308,7 +310,7 @@ def display_map(restaurants, zip_input):
     on a map embedded into the web page.
     '''
     newmap = fgmap.Fgmap()
-    newmap.createmap(origin=str(zip_input))
+    newmap.createmap(origin=str(zip_input), zoom_start=13)
     #Draw trip line and add point at each restaurant
     index = 0
     for restaurant in restaurants:
@@ -318,6 +320,7 @@ def display_map(restaurants, zip_input):
         newmap.addtrippolyline(address, color=newmap.colors[index])
         newmap.addmarker(address, popup=name, icon="star", color=newmap.colors[index])
         index += 1
+    newmap.addmarker(str(zip_input), popup="You are approximately here", icon="user", color="green")
     newmap.showzipcode(zip_input)
     htmlstring = newmap.returnhtml()
     st.components.v1.html(htmlstring, width=700, height=1000, scrolling=True)

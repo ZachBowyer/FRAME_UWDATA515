@@ -4,8 +4,19 @@ There is a broken export issue which requires a manual fix
 """
 #Making environment from scratch
 # conda remove --name FRAME_windows --all
-# conda create --name FRAME_windows python=3.9.0
+# conda create --name FRAME_windows python=3.10.8
 # conda activate FRAME_windows
+# pip install pandas
+# pip instll numpy
+# pip install fuzzywuzzy
+# pip install folium 
+# pip install googlemaps 
+# pip install polyline
+# pip install uszipcode 
+# pip install python-Levenshtein
+# pip install streamlit
+
+
 # pip install googlemaps
 # pip install folium
 # pip install polyline
@@ -32,9 +43,6 @@ There is a broken export issue which requires a manual fix
 # conda env create --name FRAME_windows --file=environment.yml
 # conda info --envs (See if it exists)
 # conda activate FRAME_windows
-
-
-
 
 """
 LINUX (WIP)
