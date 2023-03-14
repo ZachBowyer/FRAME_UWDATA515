@@ -18,12 +18,14 @@ jobs:
         python-version: '3.10.8'
 
     - name: Create Conda environment
-      run: conda env create --name FRAME_LINUX --file=environment_linux.yml
+      run: |
+           conda env create --name FRAME_LINUX --file=environment_linux.yml
            conda env list
            conda activate FRAME_LINUX
 
     - name: Run unit tests
-      run: pip install coverage
+      run: |
+           pip install coverage
            cd UnitTests
            python test_fgmap.py
            coverage run test_fgmap.py
