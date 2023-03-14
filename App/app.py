@@ -196,7 +196,6 @@ def seating_shortlist(health_inspection_filter, seating_input):
         seating_input = 'No Seating'
     else:
         pass
-    ['Takeout', '0 - 12','13 - 50', '51 - 150', '151-250', '> 250']
     acceptable_seating = []
     if seating_input == "No Seating":
         acceptable_seating = ['No Seating']
