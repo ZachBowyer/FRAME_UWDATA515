@@ -477,7 +477,7 @@ def display_map(restaurants, zip_input):
     Displays the restaurants suggested as well as the user's input location
     on a map embedded into the web page.
     '''
-    newmap = fgmap.Fgmap()
+    newmap = fgmap.Fgmap() # pylint: disable=no-member
     newmap.createmap(origin=str(zip_input))
     #Draw trip line and add point at each restaurant
     index = 0
