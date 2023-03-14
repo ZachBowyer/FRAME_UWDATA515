@@ -204,6 +204,9 @@ front_end_data['RestaurantName'] = front_end_data['RestaurantName'].apply(
     lambda x: re.sub(pattern_name, '', x))
 front_end_data['DishName'] = front_end_data['DishName'].apply(lambda x: re.sub(pattern_name, '', x))
 
+# Converting price column: "28.0 USD" to 28.0 (float)
+front_end_data['price'] = front_end_data['price'].str.replace(' USD', '').astype(float)
+
 # save the updated dataframe to a new file
 front_end_data.to_csv('../../data/Datafordashboard.csv', index=False)
 print("DATA IS READY!!!")
