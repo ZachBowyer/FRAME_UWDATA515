@@ -11,8 +11,10 @@ intended for use in the frontend dashboard.
 """
 
 import re
+import warnings
 import pandas as pd
 from fuzzywuzzy import fuzz, process
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # Define a regular expression pattern to match each category
 PATTERNS = {
@@ -101,6 +103,7 @@ THRESHOLD=80
 LIMIT=1
 matches = []
 for row in rest_sea['full_address']:
+    print(row)
     match = process.extractOne(row, king_data_df['FA'],
                                scorer=fuzz.token_sort_ratio,
                                score_cutoff=THRESHOLD)
@@ -141,3 +144,4 @@ front_end_data['DishName'] = front_end_data['DishName'].apply(lambda x: re.sub(p
 
 # save the updated dataframe to a new file
 front_end_data.to_csv('Datafordashboard.csv', index=False)
+print("DATA IS READY!!")
