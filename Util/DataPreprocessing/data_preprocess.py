@@ -8,6 +8,10 @@ It then merges the resulting dataset with menu data and applies a regular
 expression pattern to clean the restaurant name and dish name columns.
 Finally, it saves the updated dataset to a new file. The resulting dataset is
 intended for use in the frontend dashboard.
+
+This is a data wrangling code that is used to manually update the data and 
+process it so that it is rendered efficiently on the homescreen/app site.
+Hence, this code is not part of exception handling or unittesting.
 """
 
 import re
