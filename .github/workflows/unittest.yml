@@ -66,6 +66,8 @@ jobs:
           cd UnitTests
           python test_fgmap.py
           coverage run test_fgmap.py
+          coverage report
+          ls
           cd ..
           cd App
           python test_app.py
