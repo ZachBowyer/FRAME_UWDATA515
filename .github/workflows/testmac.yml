@@ -34,7 +34,15 @@ jobs:
 
     - name: Run unit tests
       run: |
-           cd UnitTests
-           python test_fgmap.py
-           coverage run test_fgmap.py
-           coverage report
+          pip install coverage
+          python setup.py
+          cd UnitTests
+          python test_fgmap.py
+          coverage run test_fgmap.py
+          coverage report
+          cd ..
+          ls
+          cd App
+          python test_app.py
+          coverage run test_app.py
+          coverage report

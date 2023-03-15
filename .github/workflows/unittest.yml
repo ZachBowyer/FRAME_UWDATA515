@@ -67,8 +67,8 @@ jobs:
           python test_fgmap.py
           coverage run test_fgmap.py
           coverage report
-          ls
           cd ..
+          ls
           cd App
           python test_app.py
           coverage run test_app.py
