@@ -97,16 +97,17 @@ class TestGoogleMapsMethods(unittest.TestCase):
                 self.assertIsInstance(coord, float,
                 "getdirections() did not return a float (inner-element)")
 
-    def test_getdirections_expectation(self): #What if directions change...
-        """ Compare to expected output """
-        directions = fgmap.getdirections("1410 18th Ave, Seattle, WA 98122",
-                                        "1300 E Pine St, Seattle, WA 98122")
-        expected_directions = [(47.61326, -122.30887), (47.6129, -122.30887), (47.6129, -122.30951),
-                              (47.6129, -122.31034), (47.61291, -122.31148), (47.61292, -122.31413),
-                              (47.61292, -122.3142), (47.61313, -122.3142), (47.61404, -122.31422),
-                              (47.61528, -122.31424), (47.61528, -122.31533)]
-        self.assertEqual(directions, expected_directions,
-                        "getdirections() did not return expected value")
+    #Unfortunately these directions can slightly change so this test wont work
+    #def test_getdirections_expectation(self): #What if directions change...
+    #    """ Compare to expected output """
+    #    directions = fgmap.getdirections("1410 18th Ave, Seattle, WA 98122",
+    #                                    "1300 E Pine St, Seattle, WA 98122")
+    #   expected_directions = [(47.61326, -122.30887), (47.6129, -122.30887), (47.6129, -122.30951),
+    #                         (47.6129, -122.31034), (47.61291, -122.31148), (47.61292, -122.31413),
+    #                          (47.61292, -122.3142), (47.61313, -122.3142), (47.61404, -122.31422),
+    #                          (47.61528, -122.31424), (47.61528, -122.31533)]
+    #    self.assertEqual(directions, expected_directions,
+    #                    "getdirections() did not return expected value")
 
     def test_getdirections_edge_invalidaddress(self):
         """ Supply address that doesn't exist """
